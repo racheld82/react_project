@@ -9,6 +9,8 @@ import Info from './components/Info';
 import Todos from './components/Todos';
 import Posts from './components/Posts'
 import Albums from './components/Albums'
+import Album from './components/Album'
+
 
 function App() {
 
@@ -24,7 +26,8 @@ function App() {
           <Route path="/home/user/:id/info" element={<Info />} />
           <Route path="/home/user/:id/todos" element={<Todos />} />
           <Route path="/home/user/:id/posts" element={<Posts />} />
-          <Route path="/home/user/:idalbums" element={<Albums />} />
+          <Route path="/home/user/:id/albums" element={<Albums />} />
+          <Route path="/home/user/:id/albums/:id" element={<Album/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />}/>
           <Route path="/register/details" element={<Details />} />

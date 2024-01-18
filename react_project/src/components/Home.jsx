@@ -7,11 +7,11 @@ import {
     Routes,
     useNavigate
 } from "react-router-dom";
-import Info from "./Info.jsx"
 
 function Home() {
     const [user,setUser]=useState({});
     const name=JSON.parse(localStorage.getItem("currentUser")).name
+    const id=JSON.parse(localStorage.getItem("currentUser")).id
 
     useEffect(()=>{
     fetch(`http://localhost:3000/users?name=${name}`)
@@ -27,10 +27,10 @@ function Home() {
     return(
         <>
         <h1>{name}</h1>
-        <Link to={{ pathname: `/home/user/${JSON.parse(localStorage.getItem("currentUser")).id}/info` , state: { user: user} }}>Info</Link>
-        <Link to="/albums" >Albums</Link>
+        <Link to={{ pathname: `/home/user/${id}/info` , state: { user: user} }}>Info</Link>
+        <Link to={{ pathname: `/home/user/${id}/albums` }} >Albums</Link>
         <Link to="/posts">Posts</Link>
-        <Link to={{ pathname: `/home/user/${JSON.parse(localStorage.getItem("currentUser")).id}/todos` }}>Todos</Link>
+        <Link to={{ pathname: `/home/user/${id}/todos` }}>Todos</Link>
           
       
       
