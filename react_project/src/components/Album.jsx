@@ -43,7 +43,7 @@ function Album () {
 
   return (
     <div>
-      <h2>Album {albumId}</h2>
+      <h2>Album 1</h2>
       <div>
         <input
           type="text"

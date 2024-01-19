@@ -13,35 +13,40 @@ function Info() {
     const navigate=useNavigate()
     const [user,setUser]=useState({});
     const name=JSON.parse(localStorage.getItem("currentUser")).name
+    // const {street, suite, city, zipcode, geo}=user.address
 
 
-    useEffect(()=>{
+    useEffect(() => {
       fetch(`http://localhost:3000/users?name=${name}`)
-      .then(response => response.json())
-      .then(data=>
-        {if(data[0] ==null)
-          setUser(data)
-    }
-      )},[])
+          .then(response => response.json())
+          .then(data => {
+              if (data.length > 0) {
+                  setUser(data[0]);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching user data:', error);
+          });
+  }, []);
 
     
         
    
     function hideInfo(){
-        navigate(`/home/user/${id}`)
+        navigate(`/home/user/${user.id}`)
     }
    return(
     <>
         <p> name: {user.name}</p>
-        <p> user name: {user.userName}</p>
+        <p> user name: {user.username}</p>
         <p> email: {user.email}</p>
         <p> phone: {user.phone}</p>
         <p> password: {user.website}</p>
-        <p>adress:</p>
-        <p> street: {user.street}  suite:{user.suite} zipcode:{user.zipcode}</p>
-        <p> geo:  lat:{user.lat}  lng:{user.lng}</p>
-        <p>company:</p>
-        <p> name: {user.name} catch parse:{user.catchParse} bs:{user.bs}</p>
+        {/* <p>adress:{user.address}</p> */}
+        {/* <p> street: {user.address.street}  suite:{user.address.suite} zipcode:{user.address.zipcode}</p>
+        <p> geo:  lat:{user.address.geo.lat}  lng:{user.address.geo.lng}</p> */}
+        {/* <p>company:{user.company}</p> */}
+        {/* <p> name: {user.company.name} catch parse:{user.company.catchParse} bs:{user.company.bs}</p> */}
         <button onClick={hideInfo}>Hide info</button>
         
     </>

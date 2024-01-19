@@ -13,7 +13,7 @@ function Todos() {
     const [todosArr, setTodosArr]=useState([])
     const [isFetched,setIsFetched]=useState(false)
     const [sortCriteria, setSortCriteria] = useState('sequential'); // קריטריון מיון
-    const [searchCriteria, setSearchCriteria] = useState(''); // קריטריון חיפוש
+    const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
     const [searchIdCriteria, setSearchIdCriteria] = useState(''); // קריטריון חיפוש לפי ID
     const [searchAlphabeticalCriteria, setSearchAlphabeticalCriteria] = useState(''); // קריטריון
     const id=JSON.parse(localStorage.getItem("currentUser")).id
@@ -127,7 +127,7 @@ function Todos() {
     if(isFetched)
       return(
         <>
-        { todosArr.map((todo) => { return (searchedTodos(todo)? <Todo todo={todo} deleteFromArr={deleteFromArr}/>:'')}) }
+        { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo todo={todo} deleteFromArr={deleteFromArr}/>)}) }
         <div>
 
         <select value={sortCriteria} onChange={handleSortChange}>
