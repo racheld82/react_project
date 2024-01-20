@@ -2,11 +2,16 @@ import {React, useState} from "react";
 
 
 function UpdatePost(props){
+    console.log("aaaaaaa");
 
-    const [title,setTitle]=useState(props.post.title);
-    const[body,setBody]=useState(props.post.body)
+    console.log(props);
+    console.log("bbbbbbbbb");
+    console.log(props.post);
+    const post = props.post;
+    const [title,setTitle]=useState(post.title);
+    const[body,setBody]=useState(post.body)
     function updatePost(){
-        fetch(`http://localhost:3000/todos?id=${props.post.id}`, {
+        fetch(`http://localhost:3000/todos?id=${post.id}`, {
               method: 'PUT',
          headers: {
         'Content-Type': 'application/json',

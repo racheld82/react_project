@@ -2,33 +2,37 @@ import React from "react";
 import { useState,useEffect } from "react";
 import Post from "./Post";
 import AddNewPost from './AddNewPost'
+import {
+  Navigate,
+  useNavigate, Link
+} from "react-router-dom";
 
 function Posts(){
-  
   const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('none'); 
-  const id=JSON.parse(localStorage.getItem("currentUser")).id
+  const id=JSON.parse(localStorage.getItem("currentUser")).id;
+  const navigate=useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/posts?userId=${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-            setPosts(data);
-        })
+    getPost();
 }, [])
 
-function addPost(){
-  return(
-    <AddNewPost/>
-
-  )
+function getPost(){
+  fetch(`http://localhost:3000/posts?userId=${id}`)
+  .then((response) => response.json())
+  .then((data) => {
+      setPosts(data);
+  })
 }
 
     const handleSearchChange = (event) => {
         setSearchCriteria(event.target.value);
   
       };
+  function deletePost(id){
+    setPosts(posts.filter(item => item.id !== id))
+  }
 
   function filteredPosts(post){
     switch (searchCriteria) {
@@ -66,11 +70,11 @@ function addPost(){
 
 
       {posts.map((post) => (filteredPosts(post)&&
-        <Post key={post.id} post={post} />
+        <Post userId={id} post={post} deletePost={deletePost}/>
       ))}
     </div>
 
-    <button onClick={addPost}>Add New Post</button>
+    <button onClick={()=>navigate(`/home/user/${id}/posts/newPost`, {state:{iserId:id}})}>Add New Post</button>
     </>
   );
 };

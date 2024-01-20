@@ -10,6 +10,9 @@ import Todos from './components/Todos';
 import Posts from './components/Posts'
 import Albums from './components/Albums'
 import Album from './components/Album'
+import Comments from './components/Comments';
+import AddNewPost from './components/AddNewPost';
+import UpdatePost from './components/UpdatePost';
 
 
 function App() {
@@ -26,6 +29,11 @@ function App() {
           <Route path="/home/user/:id/info" element={<Info />} />
           <Route path="/home/user/:id/todos" element={<Todos />} />
           <Route path="/home/user/:id/posts" element={<Posts />} />
+          <Route path="/home/user/:id/posts/:id/comments" element={<Comments />} />
+          <Route path="/home/user/:id/posts/newPost" element={<AddNewPost />} />
+          <Route path="/home/user/:id/posts/:id/update" element={<UpdatePost />} />
+
+
           <Route path="/home/user/:id/albums" element={<Albums />} />
           <Route path="/home/user/:id/albums/:id" element={<Album/>} />
           <Route path="/login" element={<Login />} />
