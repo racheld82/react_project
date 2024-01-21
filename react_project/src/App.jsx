@@ -28,6 +28,8 @@ function App() {
           {/* <Route index element={<Navigate to={`/home/user/${id}/info`} />} /> */}
           <Route path="/home/user/:id/info" element={<Info />} />
           <Route path="/home/user/:id/todos" element={<Todos />} />
+          <Route path="/home/user/:id/todos/newPost" element={<AddNewPost />} />
+          <Route path="/home/user/:id/todos/:id/update" element={<UpdatePost />} />
           <Route path="/home/user/:id/posts" element={<Posts />} />
           <Route path="/home/user/:id/posts/:id/comments" element={<Comments />} />
           <Route path="/home/user/:id/posts/newPost" element={<AddNewPost />} />

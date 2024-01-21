@@ -1,17 +1,15 @@
 import {React, useState} from "react";
+import {useLocation} from 'react-router-dom';
+
 
 
 function UpdatePost(props){
-    console.log("aaaaaaa");
+    const post=useLocation().state.post;
 
-    console.log(props);
-    console.log("bbbbbbbbb");
-    console.log(props.post);
-    const post = props.post;
     const [title,setTitle]=useState(post.title);
     const[body,setBody]=useState(post.body)
     function updatePost(){
-        fetch(`http://localhost:3000/todos?id=${post.id}`, {
+        fetch(`http://localhost:3000/posts?id=${post.id}`, {
               method: 'PUT',
          headers: {
         'Content-Type': 'application/json',

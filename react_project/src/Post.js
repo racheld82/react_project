@@ -2,7 +2,7 @@ export class Post{
     static nextId=findId()
     constructor(userId,title,body){
         this.userId=userId
-        this.id=nextId++
+        this.id=Post.nextId++;
         this.title=title
         this.body=body
     }

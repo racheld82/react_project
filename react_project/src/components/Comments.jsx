@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Comment from './Comment';
 import AddNewComment from './AddNewComment';
+import { useLocation } from 'react-router-dom';
+
 
 function Comments(props){
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const data=useLocation();
+  const postId = data.state.postId;
 
 
   function fetchArr(){
-    fetch(`localhost3000/posts?userId=${id}`)
+    console.log(data.state.postId);
+    fetch(`http://localhost:3000/comments?postId=${postId}`)
       .then(response => response.json())
-      .then(data=>setComments(data))
+      .then(data=>{setComments(data); console.log(data)})
     }
     
     useEffect(()=>{fetchArr()},[]);
@@ -60,8 +65,8 @@ function Comments(props){
           <Comment
             key={comment.id}
             comment={comment}
-            activeUser={activeUser}
-            handleUpdateComment={handleUpdateComment}
+            //activeUser={activeUser}
+            //handleUpdateComment={handleUpdateComment}
             handleDeleteComment={handleDeleteComment}
           />
         ))}

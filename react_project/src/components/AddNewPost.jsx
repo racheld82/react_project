@@ -10,15 +10,14 @@ function AddNewPost(props){
 
     function addNewPost(){
         const post=new Post(props.id,title,body)
-        const urlPost = `https://localhost:3000/posts`;
-
+        const urlPost = `http://localhost:3000/posts`;
         fetch(urlPost, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(post),
-          }).then(response => response.json()).catch(()=>{console.log("adding fail")})
+          }).then(response => {response.json(); console.log(response)}).catch(()=>{console.log("adding fail")})
     }
       
 

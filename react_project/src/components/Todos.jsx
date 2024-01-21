@@ -169,8 +169,7 @@ function Todos() {
     </div>
   
       </div>
-      <button onClick={()=>{ console.log("hi"); 
-      return <AddNewTodo userId={id}/>}}>Add An Item To The List</button>
+      <button onClick={()=>{navigate(`/home/user/${id}/posts/newPost`, {state:{userId:id}})}}>Add An Item To The List</button>
     </>
       )
  }

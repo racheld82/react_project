@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Todo } from '../Todo';
+import {useLocation} from 'react-router-dom';
 
-function AddNewTodo(props){
+function AddNewTodo(){
     
     const [newTodo,setNewTodo]=useState('');
+    const id=useLocation().state.id;
     function addNewTodo(){
-        let todo=new Todo(props.id,newTodo)
+        let todo=new Todo(id,newTodo)
         const urlPost = `http://localhost:3000/todos`;
 
         fetch(urlPost, {
