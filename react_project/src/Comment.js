@@ -6,9 +6,7 @@ export class Comment{
         this.name=name
         this.email=email
         this.body=body
-    }
-
-    
+    }  
 }
 function findId() {
     let comments=[];

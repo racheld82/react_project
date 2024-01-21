@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import { Post } from '../Post';
+import { useLocation } from 'react-router-dom';
 
-function AddNewPost(props){
+function AddNewPost(){
   
-
-    
     const [title,setTitle]=useState('');
     const [body,setBody]=useState('')
+    const data=useLocation()
+    const id=data.state.userId
 
     function addNewPost(){
-        const post=new Post(props.id,title,body)
-        const urlPost = `http://localhost:3000/posts`;
-        fetch(urlPost, {
+        let post=new Post(id,title,body);
+      fetch("http://localhost:3000/posts", {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(post),
-          }).then(response => {response.json(); console.log(response)}).catch(()=>{console.log("adding fail")})
+        body: JSON.stringify(post)
+    }).then(response => response.json()).catch(()=>{console.log("adding fail")})
     }
       
 

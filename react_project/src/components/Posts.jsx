@@ -74,7 +74,7 @@ function getPost(){
       ))}
     </div>
 
-    <button onClick={()=>navigate(`/home/user/${id}/posts/newPost`, {state:{iserId:id}})}>Add New Post</button>
+    <button onClick={()=>navigate(`/home/user/${id}/posts/add`, {state:{userId:id}})}>Add New Post</button>
     </>
   );
 };
