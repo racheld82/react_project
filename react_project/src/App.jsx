@@ -13,6 +13,8 @@ import Album from './components/Album'
 import Comments from './components/Comments';
 import AddNewPost from './components/AddNewPost';
 import UpdatePost from './components/UpdatePost';
+import AddNewTodo from './components/AddNewTodo';
+import UpdateTodo from './components/UpdateTodo'
 
 
 function App() {
@@ -28,11 +30,11 @@ function App() {
           {/* <Route index element={<Navigate to={`/home/user/${id}/info`} />} /> */}
           <Route path="/home/user/:id/info" element={<Info />} />
           <Route path="/home/user/:id/todos" element={<Todos />} />
-          <Route path="/home/user/:id/todos/newPost" element={<AddNewPost />} />
-          <Route path="/home/user/:id/todos/:id/update" element={<UpdatePost />} />
+          <Route path="/home/user/:id/todos/add" element={<AddNewTodo />} />
+          <Route path="/home/user/:id/todos/:id/update" element={<UpdateTodo />} />
           <Route path="/home/user/:id/posts" element={<Posts />} />
           <Route path="/home/user/:id/posts/:id/comments" element={<Comments />} />
-          <Route path="/home/user/:id/posts/newPost" element={<AddNewPost />} />
+          <Route path="/home/user/:id/posts/add" element={<AddNewPost />} />
           <Route path="/home/user/:id/posts/:id/update" element={<UpdatePost />} />
 
 

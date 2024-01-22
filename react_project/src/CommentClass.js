@@ -1,14 +1,12 @@
-export class Comment{
+export class CommentClass{
     static nextId=findId()
     constructor(postId,name,email,body){
         this.postId=postId
-        this.id=nextId++
+        this.id=CommentClass.nextId++
         this.name=name
         this.email=email
         this.body=body
-    }
-
-    
+    }  
 }
 function findId() {
     let comments=[];

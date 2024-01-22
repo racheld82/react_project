@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react'
-import React from 'react';
-import { useRef } from 'react'
+import React from "react";
+import { useState,useEffect } from "react"
+import Todo from "./Todo"
+import UpdateTodo from "./UpdateTodo";
+import AddNewTodo from './AddNewTodo'
 import {
-    Link,
-  useLocation,
-  useNavigate
+  Navigate,
+  useNavigate,
+ Link
 } from "react-router-dom";
-import AddNewTodo from './AddNewTodo';
-import { Todo } from '../Todo';
 
 function Todos() {
     const [todosArr, setTodosArr]=useState([])
-    const [isFetched,setIsFetched]=useState(false)
     const [sortCriteria, setSortCriteria] = useState('sequential'); // קריטריון מיון
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
     const [searchIdCriteria, setSearchIdCriteria] = useState(''); // קריטריון חיפוש לפי ID
@@ -20,38 +19,32 @@ function Todos() {
     function deleteFromArr(id){
       const updatedArr = todosArr.filter(item => item.id !== id);
       setTodosArr(updatedArr);
-
     }
     
-    // פונקציה לשינוי קריטריון המיון
-    const handleSortChange = (event) => {
+    function handleSortChange(event) {
       setSortCriteria(event.target.value);
       sortTodos();
     };
   
-    // פונקציה לשינוי קריטריון החיפוש
-    const handleSearchChange = (event) => {
+    function handleSearchChange(event){
       setSearchCriteria(event.target.value);
-
     };
   
-    // פונקציה למיון המערך לפי הקריטריון הנבחר
     const sortTodos = () => {
       switch (sortCriteria) {
         case 'sequential':
-            setTodosArr(todosArr.sort((a, b) => a.id - b.id)); // אין מיון
+            setTodosArr(todosArr.sort((a, b) => a.id - b.id)); 
         case 'execution':
             setTodosArr(todosArr.slice().sort((a, b) => {
-                // מיון לפי הקריטריון ביצוע
                 if (a.completed && !b.completed) {
-                  return -1; // אם a הוא TRUE ו b הוא FALSE, יש להציג a קודם
+                  return -1; 
                 } else if (!a.completed && b.completed) {
-                  return 1; // אם b הוא TRUE ו a הוא FALSE, יש להציג b קודם
+                  return 1; 
                 } else {
-                  return 0; // אם שני הערכים זהים או ששני הערכים הם TRUE או שני הערכים הם FALSE, אין צורך במיון
+                  return 0; 
                 }
               })
-        ); // מיון לפי ביצוע
+        ); 
         case 'alphabetical':
             setTodosArr(todosArr.slice().sort((a, b) => a.title.localeCompare(b.title))); // מיון לפי אלפבית
         case 'random':
@@ -65,15 +58,15 @@ function Todos() {
     // פונקציה לחיפוש פריטים לפי קריטריון מסוים
   
     
-      const handleSearchIdChange = (event) => {
+      function handleSearchIdChange(event){
         setSearchIdCriteria(event.target.value);
       };
     
-      const handleSearchAlphabeticalChange = (event) => {
+      function handleSearchAlphabeticalChange(event){
         setSearchAlphabeticalCriteria(event.target.value);
       };
     
-      const searchedTodos = (todo) => {
+      function searchedTodos(todo){
       
             switch (searchCriteria) {
               case 'sequential':
@@ -96,39 +89,18 @@ function Todos() {
  
       };
   
-  
-  
 
-    // function fetchArr(){
-    // fetch(`http://localhost:3000/todos?userId=${id}`)
-    //   .then(response => response.json())
-    //   .then(data=>setTodosArr(data))
-    // }
-
-    async function fetchArr() {
-      try {
-        const response = await fetch(`http://localhost:3000/todos?userId=${id}`);
-        const data = await response.json();
-        setTodosArr(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-    
     useEffect(() => {
-      const fetchData = async () => {
-        await fetchArr();
-        setIsFetched(true)
-      };
-    
-      fetchData();
-    }, []);
-    
-    if(isFetched)
+      fetch(`http://localhost:3000/todos?userId=${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+              setTodosArr(data);
+          })
+  }, [])
+  
       return(
         <>
         { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo todo={todo} deleteFromArr={deleteFromArr}/>)}) }
-        <div>
 
         <select value={sortCriteria} onChange={handleSortChange}>
           <option value="sequential">sequential</option>
@@ -137,7 +109,6 @@ function Todos() {
           <option value="random">random</option>
           <option value="none">none</option>
         </select>
-
 
         <div>
       <select value={searchCriteria} onChange={handleSearchChange}>
@@ -168,8 +139,8 @@ function Todos() {
 
     </div>
   
-      </div>
-      <button onClick={()=>{navigate(`/home/user/${id}/posts/newPost`, {state:{userId:id}})}}>Add An Item To The List</button>
+    
+      <button onClick={()=>{navigate(`/home/user/${id}/todos/add`, {state:{userId:id}})}}>Add An Item To The List</button>
     </>
       )
  }

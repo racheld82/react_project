@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Comment } from '../Comment';
+import { CommentClass } from '../CommentClass';
 
 function AddNewComment(props){
   
@@ -8,7 +8,7 @@ function AddNewComment(props){
     const [body,setBody]=useState('')
 
     function addNewComment(){
-        const comment=new Comment(props.postId,name,email,body);
+        const comment=new CommentClass(props.postId,name,email,body);
         const urlPost = `https://localhost3000/comments`;
 
         fetch(urlPost, {

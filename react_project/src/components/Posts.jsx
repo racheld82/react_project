@@ -34,6 +34,10 @@ function getPost(){
     setPosts(posts.filter(item => item.id !== id))
   }
 
+  function updatePost(id,body,title){
+    setPosts(posts.map((item) => {if(item.id === id){item.body=body;item.title=title}}))
+  }
+
   function filteredPosts(post){
     switch (searchCriteria) {
         case 'sequential':
@@ -70,11 +74,11 @@ function getPost(){
 
 
       {posts.map((post) => (filteredPosts(post)&&
-        <Post userId={id} post={post} deletePost={deletePost}/>
+        <Post post={post} deletePost={deletePost} updatePost={updatePost}/>
       ))}
     </div>
 
-    <button onClick={()=>navigate(`/home/user/${id}/posts/newPost`, {state:{iserId:id}})}>Add New Post</button>
+    <button onClick={()=>navigate(`/home/user/${id}/posts/add`, {state:{userId:id}})}>Add New Post</button>
     </>
   );
 };

@@ -65,15 +65,6 @@ function searchAlbum(album){
         {
          albums.map((album) => (
         searchAlbum(album)&&
-        //   <li key={album.id}>
-        //     {/* <Album  
-        //       id={album.id}
-        //       title={album.title}
-        //     //   onAlbumClick={onAlbumClick}
-        //     //   onDeleteAlbum={onDeleteAlbum}
-        //     //   onViewDetails={onViewDetails}
-        //     />
-        //   </li> */}
         <Link to={{ pathname: `/home/user/${id}/albums/${album.id}`}}>{album.id} - {album.title} <br /></Link>      
         ))}
       </ul>

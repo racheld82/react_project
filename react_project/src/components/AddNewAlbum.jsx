@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Post } from '../Post';
 import { useLocation } from 'react-router-dom';
 
-function AddNewPost(){
+function AddNewAlbum(){
   
     const [title,setTitle]=useState('');
     const [body,setBody]=useState('')
@@ -11,7 +11,7 @@ function AddNewPost(){
 
     function addNewPost(){
         let post=new Post(id,title,body);
-      fetch("http://localhost:3000/posts", {
+      fetch("http://localhost:3000/akbums", {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',
@@ -32,4 +32,4 @@ function AddNewPost(){
 
 }
 
-export default AddNewPost
+export default AddNewAlbum

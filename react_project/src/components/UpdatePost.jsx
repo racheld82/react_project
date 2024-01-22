@@ -3,18 +3,20 @@ import {useLocation} from 'react-router-dom';
 
 
 
-function UpdatePost(props){
+function UpdatePost(){
     const post=useLocation().state.post;
-
+ 
     const [title,setTitle]=useState(post.title);
     const[body,setBody]=useState(post.body)
+    const id=JSON.parse(localStorage.getItem("currentUser")).id
     function updatePost(){
-        fetch(`http://localhost:3000/posts?id=${post.id}`, {
+        fetch(`http://localhost:3000/posts/${post.id}`, {
               method: 'PUT',
          headers: {
         'Content-Type': 'application/json',
          },
         body: JSON.stringify({
+            userId: id,
             title: title,
             body: body
          }),
@@ -25,6 +27,7 @@ function UpdatePost(props){
         }
         return response.json();
     })
+   
     .catch(error => {
         console.error('Error updating TODO:', error);
     });

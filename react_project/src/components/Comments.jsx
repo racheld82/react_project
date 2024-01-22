@@ -1,14 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Comment from './Comment';
-import AddNewComment from './AddNewComment';
-import { useLocation } from 'react-router-dom';
+import CommentClass from '../CommentClass';
+import UpdatePost from './UpdatePost';
+import {
+  Navigate,
+  useNavigate, Link
+} from "react-router-dom";
 
 
 function Comments(props){
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
   const data=useLocation();
   const postId = data.state.postId;
+  const [name,setName]=useState('');
+  const [email,setEmail]=useState("")
+  const [body,setBody]=useState('')
+
+  function addNewComment(){
+      const comment=new CommentClass(postId,name,email,body);
+      const urlPost = `https://localhost3000/comments`;
+      fetch(urlPost, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(comment),
+      }).then(response => response.json()).catch(()=>{console.log("adding fail")})
+  }
 
 
   function fetchArr(){
@@ -17,31 +35,10 @@ function Comments(props){
       .then(response => response.json())
       .then(data=>{setComments(data); console.log(data)})
     }
-    
     useEffect(()=>{fetchArr()},[]);
 
 
-//   function handleUpdateComment(commentId){
-//     fetch(`http://localhost:3000/comments?id=${commentId}`, {
-//                 method: 'PUT',
-//            headers: {
-//           'Content-Type': 'application/json',
-//            },
-//           body: JSON.stringify({
-//               completed: todo.completed,
-//            }),
-//       })
-//       .then(response => {
-//           if (!response.ok) {
-//               throw new Error('Network response was not ok');
-//           }
-//           return response.json();
-//       })
-//       .catch(error => {
-//           console.error('Error updating TODO:', error);
-//       });
 
-//   };
 
   function handleDeleteComment(commentId){
     const urlDelete = `https://localhost:3000/todos?id=${commentId}`;
@@ -65,14 +62,14 @@ function Comments(props){
           <Comment
             key={comment.id}
             comment={comment}
-            //activeUser={activeUser}
-            //handleUpdateComment={handleUpdateComment}
             handleDeleteComment={handleDeleteComment}
           />
         ))}
       </ul>
-      <input type="text" placeholder="Add Comment" value={newComment} onChange={(e) => setNewComment(e.target.value)}/>
-      <button onClick={()=>{<AddNewComment postId={props.postId}/>}}>Add</button>
+      <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)}/>
+      <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
+      <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)}/>
+      <button onClick={()=>{addNewComment}}>Add</button>
     </div>
   );
 };
