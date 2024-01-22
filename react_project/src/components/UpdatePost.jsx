@@ -5,8 +5,10 @@ import {useLocation} from 'react-router-dom';
 
 function UpdatePost(){
     const post=useLocation().state.post;
+ 
     const [title,setTitle]=useState(post.title);
     const[body,setBody]=useState(post.body)
+    const id=JSON.parse(localStorage.getItem("currentUser")).id
     function updatePost(){
         fetch(`http://localhost:3000/posts/${post.id}`, {
               method: 'PUT',
@@ -14,6 +16,7 @@ function UpdatePost(){
         'Content-Type': 'application/json',
          },
         body: JSON.stringify({
+            userId: id,
             title: title,
             body: body
          }),
@@ -24,6 +27,7 @@ function UpdatePost(){
         }
         return response.json();
     })
+   
     .catch(error => {
         console.error('Error updating TODO:', error);
     });

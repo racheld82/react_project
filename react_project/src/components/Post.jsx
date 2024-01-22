@@ -43,7 +43,7 @@ function Post(props) {
 
       {isExpanded && (
         <div>
-          <p>{post.content}</p>
+          <p>{post.body}</p>
           <button onClick={()=>navigate(`/home/user/${props.userId}/posts/${post.id}/comments`, {state:{postId:post.id}})}>Comments</button>
         </div>
       )}

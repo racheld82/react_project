@@ -2,7 +2,7 @@ export class Todo{
     
     static nextid=findId()
     constructor(userId, title,completed=false){
-        this.id=nextid++
+        this.id=Todo.nextid++
         this.userId=userId
         this.title=title
         this.completed=completed

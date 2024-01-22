@@ -1,11 +1,12 @@
 import {React, useState} from "react";
+import { useLocation } from "react-router-dom";
 
 
-function UpdateTodo(props){
-
-    const [title,setTitle]=useState('');
+function UpdateTodo(){
+    const todo=useLocation().state.todo
+    const [title,setTitle]=useState(todo.title);
     function updateTodo(){
-        fetch(`http://localhost:3000/todos?id=${props.id}`, {
+        fetch(`http://localhost:3000/todos?id=${todo.id}`, {
               method: 'PUT',
          headers: {
         'Content-Type': 'application/json',
@@ -25,7 +26,7 @@ function UpdateTodo(props){
     });
     }
     return( <>
-        <input type='text' placeholder='update todo' onChange={(e) => setTitle(e.target.value)}/>
+        <input type='text' placeholder='update todo' value={todo.title} onChange={(e) => setTitle(e.target.value)}/>
         <button onClick={updateTodo}>Update</button>
         </>)
 }
