@@ -11,7 +11,7 @@ function AddNewAlbum(){
 
     function addNewPost(){
         let post=new Post(id,title,body);
-      fetch("http://localhost:3000/akbums", {
+      fetch("http://localhost:3000/albums", {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',

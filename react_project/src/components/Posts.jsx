@@ -12,7 +12,9 @@ function Posts(){
   const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('none'); 
-  const userId=useContext(useIdContext);
+  // const userId=useContext(useIdContext);
+  const userId=JSON.parse(localStorage.getItem("currentUser")).id
+
   const navigate=useNavigate();
 
   useEffect(() => {

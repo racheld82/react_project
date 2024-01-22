@@ -14,9 +14,8 @@ function Info() {
     const navigate=useNavigate()
     const [user,setUser]=useState({});
     //const name=JSON.parse(localStorage.getItem("currentUser")).name
-    const userId = useIdContext();
-
-
+    // const userId = useIdContext();
+    const userId=JSON.parse(localStorage.getItem("currentUser")).id
 
     useEffect(() => {
         console.log(userId);

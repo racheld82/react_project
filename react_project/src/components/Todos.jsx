@@ -12,7 +12,8 @@ function Todos() {
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
     const [searchIdCriteria, setSearchIdCriteria] = useState(''); // קריטריון חיפוש לפי ID
     const [searchAlphabeticalCriteria, setSearchAlphabeticalCriteria] = useState(''); // קריטריון
-    const userId=useContext(useIdContext);
+    // const userId=useContext(useIdContext);
+    const userId=JSON.parse(localStorage.getItem("currentUser")).id
     function deleteFromArr(id){
       const updatedArr = todosArr.filter(item => item.id !== id);
       setTodosArr(updatedArr);
