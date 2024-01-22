@@ -29,8 +29,8 @@ function Home() {
         <h1>{name}</h1>
         <Link to={{ pathname: `/home/user/${id}/info` , state: { user: user} }}>Info</Link>
         <Link to={{ pathname: `/home/user/${id}/albums` }} >Albums</Link>
-        <Link to={{ pathname: `/home/user/${id}/posts` }}>Posts</Link>
-        <Link to={{ pathname: `/home/user/${id}/todos` }}>Todos</Link>
+        <Link to={{ pathname: `/home/user/${id}/posts`}}>Posts</Link>
+        <Link to={{ pathname: `/home/user/${id}/todos`}}>Todos</Link>
           
       
       

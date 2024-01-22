@@ -7,7 +7,7 @@ function Album () {
   const limit=10
   const [offset, setOffset]=useState(1)
   const[fetchTimes,setFetchTimes]=useState(1)
-  const { userId, albumId } = useParams();
+  const { albumId } = useParams();
   console.log(albumId)
 
   

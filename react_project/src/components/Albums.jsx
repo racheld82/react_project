@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Album from './Album';
 import { Link } from 'react-router-dom';
+import { useIdContext } from './Login';
 
 function Albums(){
   const [filter, setFilter] = useState('all');
   const[searchTerm,setSearchTerm] =useState('')
   const [albums,setAlbums]=useState([])
-  const id=JSON.parse(localStorage.getItem("currentUser")).id
+ const userId = useIdContext();
+
 
   function handleFilterChange(newFilter){
     setFilter(newFilter);
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/albums?userId=${id}`)
+    console.log(userId)
+    fetch(`http://localhost:3000/albums?userId=${userId}`)
         .then((response) => response.json())
         .then((data) => {
             setAlbums(data);
@@ -65,7 +68,7 @@ function searchAlbum(album){
         {
          albums.map((album) => (
         searchAlbum(album)&&
-        <Link to={{ pathname: `/home/user/${id}/albums/${album.id}`}}>{album.id} - {album.title} <br /></Link>      
+        <Link to={{ pathname: `/home/user/${userId}/albums/${album.id}`}}>{album.id} - {album.title} <br /></Link>      
         ))}
       </ul>
       <button onClick={handleAddAlbumClick}>Add Album</button>

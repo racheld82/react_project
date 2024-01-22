@@ -1,13 +1,10 @@
 import React from "react";
-import { useState,useEffect } from "react"
+import { useState,useEffect ,useContext} from "react"
 import Todo from "./Todo"
 import UpdateTodo from "./UpdateTodo";
 import AddNewTodo from './AddNewTodo'
-import {
-  Navigate,
-  useNavigate,
- Link
-} from "react-router-dom";
+import { useIdContext } from './Login';
+
 
 function Todos() {
     const [todosArr, setTodosArr]=useState([])
@@ -15,7 +12,7 @@ function Todos() {
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
     const [searchIdCriteria, setSearchIdCriteria] = useState(''); // קריטריון חיפוש לפי ID
     const [searchAlphabeticalCriteria, setSearchAlphabeticalCriteria] = useState(''); // קריטריון
-    const id=JSON.parse(localStorage.getItem("currentUser")).id
+    const userId=useContext(useIdContext);
     function deleteFromArr(id){
       const updatedArr = todosArr.filter(item => item.id !== id);
       setTodosArr(updatedArr);
@@ -100,7 +97,7 @@ function Todos() {
   
       return(
         <>
-        { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo todo={todo} deleteFromArr={deleteFromArr}/>)}) }
+        { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr}/>)}) }
 
         <select value={sortCriteria} onChange={handleSortChange}>
           <option value="sequential">sequential</option>
@@ -140,7 +137,7 @@ function Todos() {
     </div>
   
     
-      <button onClick={()=>{navigate(`/home/user/${id}/todos/add`, {state:{userId:id}})}}>Add An Item To The List</button>
+      <button onClick={()=>{navigate(`/home/user/${userId}/todos/add`, {state:{userId:userId}})}}>Add An Item To The List</button>
     </>
       )
  }

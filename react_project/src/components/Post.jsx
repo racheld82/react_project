@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Comments from './Comments';
 import UpdatePost from './UpdatePost';
 import {
   Navigate,
-  useNavigate, Link
+  useNavigate
 } from "react-router-dom";
+import { useIdContext } from './Login';
+
 
 function Post(props) {
    const post=props.post;
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate=useNavigate()
+  const userId = useContext(useIdContext);
 
   const style={
 
@@ -38,13 +41,13 @@ function Post(props) {
       <p>{post.id} - {post.title}</p>
       <button onClick={handleExpand}>Expand</button>
       <button onClick={deletePost}>Delete</button>
-      <button onClick={()=>{console.log(post);navigate(`/home/user/${props.userId}/posts/${post.id}/update`, {state:{post:post}})}}>Update</button>
+      <button onClick={()=>{console.log(post);navigate(`/home/user/${userId}/posts/${post.id}/update`, {state:{post:post}})}}>Update</button>
       
 
       {isExpanded && (
         <div>
           <p>{post.body}</p>
-          <button onClick={()=>navigate(`/home/user/${props.userId}/posts/${post.id}/comments`, {state:{postId:post.id}})}>Comments</button>
+          <button onClick={()=>navigate(`/home/user/${userId}/posts/${post.id}/comments`, {state:{postId:post.id}})}>Comments</button>
         </div>
       )}
     </div>

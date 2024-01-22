@@ -9,15 +9,16 @@ function AddNewComment(props){
 
     function addNewComment(){
         const comment=new CommentClass(props.postId,name,email,body);
-        const urlPost = `https://localhost3000/comments`;
-
+        const urlPost = `http://localhost:3000/comments`;
+        console.log("thipi");
         fetch(urlPost, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(comment),
-          }).then(response => response.json()).catch(()=>{console.log("adding fail")})
+          }).then(response => {response.json();         console.log("thipi pasternak");
+        }).catch(()=>{console.log("adding fail")})
     }
       
 

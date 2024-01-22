@@ -1,17 +1,18 @@
-import React from "react";
-import { useState,useEffect } from "react";
+import React, { useId } from "react";
+import { useState,useEffect, useContext } from "react";
 import Post from "./Post";
 import AddNewPost from './AddNewPost'
 import {
   Navigate,
-  useNavigate, Link
+  useNavigate
 } from "react-router-dom";
+import { useIdContext } from './Login';
 
 function Posts(){
   const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('none'); 
-  const id=JSON.parse(localStorage.getItem("currentUser")).id;
+  const userId=useContext(useIdContext);
   const navigate=useNavigate();
 
   useEffect(() => {
@@ -19,7 +20,8 @@ function Posts(){
 }, [])
 
 function getPost(){
-  fetch(`http://localhost:3000/posts?userId=${id}`)
+  console.log(userId)
+  fetch(`http://localhost:3000/posts?userId=${userId}`)
   .then((response) => response.json())
   .then((data) => {
       setPosts(data);
@@ -78,7 +80,7 @@ function getPost(){
       ))}
     </div>
 
-    <button onClick={()=>navigate(`/home/user/${id}/posts/add`, {state:{userId:id}})}>Add New Post</button>
+    <button onClick={()=>navigate(`/home/user/${userId}/posts/add`)}>Add New Post</button>
     </>
   );
 };

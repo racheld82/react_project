@@ -8,8 +8,10 @@ export class Post{
     }
 
 }
+
 function findId() {
-    fetch(`http://localhost:3000/todos`, {
+    let posts=[];
+    fetch(`http://localhost:3000/posts`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -17,9 +19,10 @@ function findId() {
         })
     .then(response => response.json())
     .catch(()=>{console.log("error")})
-    .then(data=>console.log(data))
-    .then(data=>{return data.reduce((maxPost, currentPost) => {
+    .then(data=>posts=data)
+    return posts.reduce((maxPost, currentPost) => {
         return currentPost.id > maxPost.id ? currentPost : maxPost;
-    }, data[0])})
- 
+    }, posts[0])
+    ; 
+    
 }

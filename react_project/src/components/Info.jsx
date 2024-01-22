@@ -7,17 +7,20 @@ import {
   useNavigate
 } from "react-router-dom";
 import { User } from '../User';
+import { useIdContext } from './Login';
 
 
 function Info() {
     const navigate=useNavigate()
     const [user,setUser]=useState({});
-    const name=JSON.parse(localStorage.getItem("currentUser")).name
-    // const {street, suite, city, zipcode, geo}=user.address
+    //const name=JSON.parse(localStorage.getItem("currentUser")).name
+    const userId = useIdContext();
+
 
 
     useEffect(() => {
-      fetch(`http://localhost:3000/users?name=${name}`)
+        console.log(userId);
+      fetch(`http://localhost:3000/users?userId=${userId}`)
           .then(response => response.json())
           .then(data => {
               if (data.length > 0) {
@@ -33,7 +36,7 @@ function Info() {
         
    
     function hideInfo(){
-        navigate(`/home/user/${user.id}`)
+        navigate(`/home/user/${userId}`)
     }
    return(
     <>
