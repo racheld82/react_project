@@ -3,6 +3,7 @@ import Album from './Album';
 import { Link } from 'react-router-dom';
 import { useIdContext } from './Login';
 import AddNewAlbum from './AddNewAlbum';
+import styles from '../Albums.module.css';
 
 function Albums(){
   const [filter, setFilter] = useState('all');
@@ -49,14 +50,13 @@ function searchAlbum(album){
 
 
  function addAlbum(album) {
-   setAlbums(...album)
-    
+  setAlbums((prevAlbums) => [...prevAlbums, album]);
   };
 
   return (
-    <div>
-      <h2>Albums</h2>
-          <select value={filter} onChange={(e) => handleFilterChange(e.target.value)}>
+    <div className={styles.albumsContainer}>
+      <h2 className={styles.albumsHeader}>Albums</h2>
+          <select value={filter} onChange={(e) => handleFilterChange(e.target.value)} className={styles.filterSelect}>
             <option value="all">All Albums</option>
             <option value="title">Title</option>
             <option value="id">Id</option> 
@@ -64,16 +64,62 @@ function searchAlbum(album){
           <input type='text' onChange={(e) => setSearchTerm(e.target.value)}/>
       
    
-      <ul>
+      <ul className={styles.albumList}>
         {
          albums.map((album) => (
-        searchAlbum(album)&&
-        <Link to={{ pathname: `/home/user/${userId}/albums/${album.id}`}}>{album.id} - {album.title} <br /></Link>      
+        searchAlbum(album)&&(
+            <li className={styles.albumListItem} key={album.id}>
+                      <Link to={{ pathname: `/home/user/${userId}/albums/${album.id}`}} className={styles.albumLink}>{album.id} - {album.title} <br /></Link>
+          </li>
+        )
         ))}
       </ul>
+      <div className={styles.addAlbumForm}>
       <AddNewAlbum addAlbum={addAlbum}/>
+      </div>
     </div>
   );
 };
 
 export default Albums;
+
+
+
+
+
+
+
+//   return (
+//     <div className={styles.albumsContainer}>
+//       <h2 className={styles.albumsHeader}>Albums</h2>
+//       <select
+//         value={filter}
+//         onChange={(e) => handleFilterChange(e.target.value)}
+//         className={styles.filterSelect}
+//       >
+//         {/* ... */}
+//       </select>
+//       <input type='text' onChange={(e) => setSearchTerm(e.target.value)} />
+
+//       <ul className={styles.albumList}>
+//         {albums.map((album) => (
+//           searchAlbum(album) && (
+//             <li className={styles.albumListItem} key={album.id}>
+//               <Link
+//                 to={{ pathname: `/home/user/${userId}/albums/${album.id}` }}
+//                 className={styles.albumLink}
+//               >
+//                 {album.id} - {album.title} <br />
+//               </Link>
+//             </li>
+//           )
+//         ))}
+//       </ul>
+//       <div className={styles.addAlbumForm}>
+//         <AddNewAlbum addAlbum={addAlbum} />
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Albums;

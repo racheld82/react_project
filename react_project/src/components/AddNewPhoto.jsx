@@ -1,51 +1,36 @@
-import React, { useState } from "react";
-import { Photo } from "../Photo";
+import React, { useState } from 'react'
+import { CommentClass } from '../CommentClass';
 
+function AddNewComment(props){
+  
+    const [name,setName]=useState('');
+    const [email,setEmail]=useState("")
+    const [body,setBody]=useState('')
 
-function AddNewPhoto(props){
-
-    const [title,setTitle]=useState('');
-    const [url,setUrl]=useState('')
-
-    async function addNewPhoto(){
-        let id;
-        await fetch("http://localhost:3000/nextID", {
-            method: 'GET'
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                id = json[0].nextPhotoId
-            });
-        const photo=new Photo(id,props.id,title,url)
-      fetch("http://localhost:3000/photos", {
+    function addNewComment(){
+        const comment=new CommentClass(props.postId,name,email,body);
+        const urlPost = `http://localhost:3000/comments`;
+        fetch(urlPost, {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(photo)
-    }).then(response => response.json()).catch(()=>{console.log("adding fail")})
-    fetch("http://localhost:3000/nextID/1", {
-        method: "PATCH",
-        body: JSON.stringify({
-            "nextPhotoId": id + 1
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-        },
-    })
-        .then((response) => response.json())
+        body: JSON.stringify(comment),
+          }).then(response => {response.json();
+        }).catch(()=>{console.log("adding fail")})
     }
       
 
     return(
         <>
-        <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)}/>
-        <input type='text' placeholder='URL' onChange={(e) => setUrl(e.target.value)}/>
-        <button onClick={addNewPhoto}>Add</button>
+        <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)}/>
+        <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
+        <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)}/>
+
+        <button onClick={addNewComment}>Add</button>
         </>
     )
 
-
 }
 
-export default AddNewPhoto
+export default AddNewComment

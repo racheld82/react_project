@@ -9,7 +9,8 @@ function Album () {
   const [offset, setOffset]=useState(1)
   const[fetchTimes,setFetchTimes]=useState(1)
   const { albumId } = useParams();
-  console.log(albumId)
+  const [update, setUpdate] = useState(false);
+
 
   
 
@@ -27,7 +28,7 @@ function Album () {
       
   };
 
-  const handleUpdateClick = (photoId) => {
+  const UpdatePhoto = (photoId) => {
     const newUrl = prompt('Enter new photo URL:');
     if (newUrl) {
       onUpdatePhoto(album.id, photoId, newUrl);
@@ -36,7 +37,7 @@ function Album () {
 
 
   function fetchPhotos(){
-     fetch(`http://localhost:3000/photos?albumId=1`)
+     fetch(`http://localhost:3000/photos?albumId=${albumId}`)
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
@@ -48,8 +49,8 @@ function Album () {
 
   return (
     <div>
-      <h2>Album 1</h2>
-      <AddNewPhoto id={albumId}/>
+      <h2>Album {albumId}</h2>
+      <AddNewPhoto albumId={albumId}/>
   
       {photos.map((photo) => (
         <div key={photo.id}>
