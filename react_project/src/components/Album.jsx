@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation,useParams } from 'react-router-dom';
+import { Photo } from '../Photo';
+import AddNewPhoto from './AddNewPhoto';
 
 function Album () {
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
@@ -12,23 +14,27 @@ function Album () {
 
   
 
-//   const handleDeleteClick = (photoId) => {
-//     onDeletePhoto(album.id, photoId);
-//   };
+  function handleDeleteClick(photoId){
+    fetch(`http://localhost:3000/photos/${photoId}`, {
+      method: 'DELETE',
+      headers: {
+      'Content-Type': 'application/json',
+      }}).then(response => {
+        response.json();
+      }).catch(() => {
+      console.log("delete fail");
+      });
+      setPhotos(photos.filter(item => item.id !== photoId))
+      
+  };
 
-//   const handleUpdateClick = (photoId) => {
-//     const newUrl = prompt('Enter new photo URL:');
-//     if (newUrl) {
-//       onUpdatePhoto(album.id, photoId, newUrl);
-//     }
-//   };
+  const handleUpdateClick = (photoId) => {
+    const newUrl = prompt('Enter new photo URL:');
+    if (newUrl) {
+      onUpdatePhoto(album.id, photoId, newUrl);
+    }
+  };
 
-//   const handleAddClick = () => {
-//     if (newPhotoUrl) {
-//       onAddPhoto(album.id, newPhotoUrl);
-//       setNewPhotoUrl('');
-//     }
-//   };
 
   function fetchPhotos(){
      fetch(`http://localhost:3000/photos?albumId=1`)
@@ -44,20 +50,13 @@ function Album () {
   return (
     <div>
       <h2>Album 1</h2>
-      <div>
-        <input
-          type="text"
-          value={newPhotoUrl}
-          onChange={(e) => setNewPhotoUrl(e.target.value)}
-          placeholder="New Photo URL"
-        />
-        {/* <button onClick={handleAddClick}>Add Photo</button> */}
-      </div>
+      <AddNewPhoto id={albumId}/>
+  
       {photos.map((photo) => (
         <div key={photo.id}>
           <img src={photo.thumbnailUrl} alt={photo.title} />
-          {/* <button onClick={() => handleDeleteClick(photo.id)}>Delete</button>
-          <button onClick={() => handleUpdateClick(photo.id)}>Update</button> */}
+          <button onClick={() => handleDeleteClick(photo.id)}>Delete</button>
+          <button onClick={() => handleUpdateClick(photo.id)}>Update</button>
         </div>
       ))}
        <button onClick={()=>{setOffset(photos[photos.length-1].id);setFetchTimes(fetchTimes+1);fetchPhotos()}}></button>

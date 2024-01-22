@@ -1,31 +1,28 @@
 import React, { useState } from 'react'
 import { Post } from '../Post';
-import { useLocation } from 'react-router-dom';
+import { json, useLocation } from 'react-router-dom';
+import { Album } from '../Album';
 
-function AddNewAlbum(){
+function AddNewAlbum(props){
   
     const [title,setTitle]=useState('');
-    const [body,setBody]=useState('')
-    const data=useLocation()
-    const id=data.state.userId
+    const id=JSON.parse(localStorage.getItem("currentUser")).id
 
     function addNewPost(){
-        let post=new Post(id,title,body);
+        const album=new Album(id,title)
       fetch("http://localhost:3000/albums", {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(post)
-    }).then(response => response.json()).catch(()=>{console.log("adding fail")})
+        body: JSON.stringify(album)
+    }).then(response => response.json()).then(props.AddNewAlbum(album)).catch(()=>{console.log("adding fail")})
     }
       
 
     return(
         <>
         <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)}/>
-        <input type='text' placeholder='post' onChange={(e) => setBody(e.target.value)}/>
-
         <button onClick={addNewPost}>Add</button>
         </>
     )

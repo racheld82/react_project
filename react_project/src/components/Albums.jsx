@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Album from './Album';
 import { Link } from 'react-router-dom';
 import { useIdContext } from './Login';
+import AddNewAlbum from './AddNewAlbum';
 
 function Albums(){
   const [filter, setFilter] = useState('all');
@@ -47,7 +48,8 @@ function searchAlbum(album){
 
 
 
-  const handleAddAlbumClick = () => {
+ function addAlbum(album) {
+   setAlbums(...album)
     
   };
 
@@ -69,7 +71,7 @@ function searchAlbum(album){
         <Link to={{ pathname: `/home/user/${userId}/albums/${album.id}`}}>{album.id} - {album.title} <br /></Link>      
         ))}
       </ul>
-      <button onClick={handleAddAlbumClick}>Add Album</button>
+      <AddNewAlbum addAlbum={addAlbum}/>
     </div>
   );
 };
