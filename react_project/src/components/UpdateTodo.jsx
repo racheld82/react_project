@@ -2,31 +2,34 @@ import {React, useState} from "react";
 import { useLocation } from "react-router-dom";
 
 
-function UpdateTodo(){
-    const todo=useLocation().state.todo
+function UpdateTodo(props){
+    const todo=props.todo
     const [title,setTitle]=useState(todo.title);
-    function updateTodo(){
-        fetch(`http://localhost:3000/todos?id=${todo.id}`, {
-              method: 'PUT',
-         headers: {
-        'Content-Type': 'application/json',
-         },
-        body: JSON.stringify({
-            title: title,
-         }),
-})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    async function updateTodo() {
+        try {
+            const response = await fetch(`http://localhost:3000/todos/${todo.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const updatedTodo = await response.json();
+            props.updateArr(updatedTodo.id, title);
+        } catch (error) {
+            console.error('Error updating TODO:', error);
         }
-        return response.json();
-    })
-    .catch(error => {
-        console.error('Error updating TODO:', error);
-    });
     }
+ 
     return( <>
-        <input type='text' placeholder='update todo' value={todo.title} onChange={(e) => setTitle(e.target.value)}/>
+        <input type='text' placeholder='update todo' value={title} onChange={(e) => setTitle(e.target.value)}/>
         <button onClick={updateTodo}>Update</button>
         </>)
 }

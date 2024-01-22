@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import UpdateTodo from "./UpdateTodo";
 import { useNavigate } from "react-router-dom";
 
@@ -6,10 +6,11 @@ function Todo(props){
 
     let todo=props.todo;
     const navigate=useNavigate()
+    const[toUpdate,setToUpdate]=useState(false)
     const id=JSON.parse(localStorage.getItem("currentUser")).id
 
     function deleteTodo(){
-        const urlDelete = `https://localhost:3000/todos?id=${todo.id}`;
+        const urlDelete = `https://localhost:3000/todos/${todo.id}`;
   
         fetch(urlDelete, {
         method: 'DELETE',
@@ -22,7 +23,7 @@ function Todo(props){
       }
   
       function updateStatusTodo(){
-        fetch(`http://localhost:3000/todos?id=${todo.id}`, {
+        fetch(`http://localhost:3000/todos/${todo.id}`, {
                 method: 'PUT',
            headers: {
           'Content-Type': 'application/json',
@@ -45,10 +46,11 @@ function Todo(props){
     return(
         <>
         <p>id:{todo.id} title:{todo.title}</p>
-        <input type='checkbox' checked={todo.completed} onChange={()=>{todo.completed=checked}} value={todo.completed}>Completed?</input>
+        {/* <input type='checkbox' checked={todo.completed} onChange={()=>{todo.completed=checked}} value={todo.completed}>Completed?</input> */}
         <button onClick={deleteTodo}>Delete</button>
         <button onClick={updateStatusTodo}>Update Status</button>
-        <button onClick={()=>{navigate(`/home/user/${id}/todos/${todo.id}/update`, {state:{todo:todo}})}}>Update</button>
+        <button onClick={()=>{setToUpdate(true)}}>Update</button>
+        {toUpdate&&<UpdateTodo todo={todo} updateArr={props.updateArr}/>}
         </>
        
     )

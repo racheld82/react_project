@@ -1,22 +1,21 @@
 import {React, useState} from "react";
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 
 
-function UpdatePost(){
-    const post=useLocation().state.post;
- 
+function UpdatePost(props){
+    const post=props.post;
+  const navigate=useNavigate()
     const [title,setTitle]=useState(post.title);
     const[body,setBody]=useState(post.body)
-    const id=JSON.parse(localStorage.getItem("currentUser")).id
+    const userId=JSON.parse(localStorage.getItem("currentUser")).id
     function updatePost(){
-        fetch(`http://localhost:3000/posts/${post.id}`, {
-              method: 'PUT',
+        fetch(`http://localhost:3000/posts?id=${post.id}`, {
+              method: 'PATCH',
          headers: {
         'Content-Type': 'application/json',
          },
         body: JSON.stringify({
-            userId: id,
             title: title,
             body: body
          }),
@@ -27,7 +26,7 @@ function UpdatePost(){
         }
         return response.json();
     })
-   
+    .then(props.updateArr(post.id,title,body))
     .catch(error => {
         console.error('Error updating TODO:', error);
     });

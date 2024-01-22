@@ -35,7 +35,7 @@ function App() {
           <Route path="/home/user/:id/posts" element={<Posts />} />
           <Route path="/home/user/:id/posts/:id/comments" element={<Comments />} />
           <Route path="/home/user/:id/posts/add" element={<AddNewPost />} />
-          <Route path="/home/user/:id/posts/:id/update" element={<UpdatePost />} />
+          {/* <Route path="/home/user/:id/posts/:id/update" element={<UpdatePost />} /> */}
 
 
           <Route path="/home/user/:id/albums" element={<Albums />} />

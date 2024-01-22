@@ -38,7 +38,7 @@ function getPost(){
     setPosts(posts.filter(item => item.id !== id))
   }
 
-  function updatePost(id,body,title){
+  function updateArr(id,title,body){
     setPosts(posts.map((item) => {if(item.id === id){item.body=body;item.title=title}}))
   }
 
@@ -78,7 +78,7 @@ function getPost(){
 
 
       {posts.map((post) => (filteredPosts(post)&&
-        <Post post={post} deletePost={deletePost} updatePost={updatePost}/>
+        <Post post={post} deletePost={deletePost} updateArr={updateArr}/>
       ))}
     </div>
 

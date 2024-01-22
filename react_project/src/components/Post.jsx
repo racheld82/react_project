@@ -9,8 +9,9 @@ import { useIdContext } from './Login';
 
 
 function Post(props) {
-   const post=props.post;
+  const post=props.post;
   const [isExpanded, setIsExpanded] = useState(false);
+  const[toUpdate,setToUpdate]=useState(false)
   const navigate=useNavigate()
   const userId = useContext(useIdContext);
 
@@ -38,11 +39,11 @@ function Post(props) {
 
   return (
     <div>
-      <p>{post.id} - {post.title}</p>
+      <p>{props.post.id} - {post.title}</p>
       <button onClick={handleExpand}>Expand</button>
       <button onClick={deletePost}>Delete</button>
-      <button onClick={()=>{console.log(post);navigate(`/home/user/${userId}/posts/${post.id}/update`, {state:{post:post}})}}>Update</button>
-      
+      <button onClick={()=>{setToUpdate(true)}}>Update</button>
+      <div>{toUpdate&&<UpdatePost post={post} updateArr={props.updateArr}/>}</div>
 
       {isExpanded && (
         <div>

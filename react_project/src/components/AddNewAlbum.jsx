@@ -6,10 +6,18 @@ import { Album } from '../Album';
 function AddNewAlbum(props){
   
     const [title,setTitle]=useState('');
-    const id=JSON.parse(localStorage.getItem("currentUser")).id
+    const userId=JSON.parse(localStorage.getItem("currentUser")).id
 
-    function addNewPost(){
-        const album=new Album(id,title)
+    async function addNewPost(){
+        let id;
+        await fetch("http://localhost:3000/nextID", {
+            method: 'GET'
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                id = json[0].nextAlbumId
+            });
+        const album=new Album(id,userId,title)
       fetch("http://localhost:3000/albums", {
         method: 'POST',
         headers: {
@@ -17,6 +25,16 @@ function AddNewAlbum(props){
         },
         body: JSON.stringify(album)
     }).then(response => response.json()).then(props.AddNewAlbum(album)).catch(()=>{console.log("adding fail")})
+    fetch("http://localhost:3000/nextID/1", {
+        method: "PATCH",
+        body: JSON.stringify({
+            "nextAlbumId": id + 1
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+        },
+    })
+        .then((response) => response.json())
     }
       
 

@@ -4,21 +4,32 @@ import Todo from "./Todo"
 import UpdateTodo from "./UpdateTodo";
 import AddNewTodo from './AddNewTodo'
 import { useIdContext } from './Login';
+import { useNavigate } from "react-router-dom";
 
 
 function Todos() {
     const [todosArr, setTodosArr]=useState([])
-    const [sortCriteria, setSortCriteria] = useState('sequential'); // קריטריון מיון
+    const [toAdd,setToAdd]=useState(false)
+    const [sortCriteria, setSortCriteria] = useState('none'); // קריטריון מיון
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
-    const [searchIdCriteria, setSearchIdCriteria] = useState(''); // קריטריון חיפוש לפי ID
-    const [searchAlphabeticalCriteria, setSearchAlphabeticalCriteria] = useState(''); // קריטריון
+    const [searchInputCriteria, setSearchInputCriteria] = useState(''); // קריטריון חיפוש לפי ID
     // const userId=useContext(useIdContext);
     const userId=JSON.parse(localStorage.getItem("currentUser")).id
+    const navigate=useNavigate()
     function deleteFromArr(id){
       const updatedArr = todosArr.filter(item => item.id !== id);
       setTodosArr(updatedArr);
     }
-    
+
+    function updateArr(id,title){
+      setTodosArr(todosArr.map((item) => {if(item.id === id){item.title=title}}))
+
+    }
+
+    function addToArr(todo){
+  
+    }
+
     function handleSortChange(event) {
       setSortCriteria(event.target.value);
       sortTodos();
@@ -28,10 +39,16 @@ function Todos() {
       setSearchCriteria(event.target.value);
     };
   
-    const sortTodos = () => {
+    function sortTodos () {
       switch (sortCriteria) {
         case 'sequential':
-            setTodosArr(todosArr.sort((a, b) => a.id - b.id)); 
+            setTodosArr(todosArr.sort((a, b) => {  if (a.id >b.id) {
+              return -1; 
+            } else if (a.id<b.id) {
+              return 1; 
+            } else {
+              return 0; 
+            }})); 
         case 'execution':
             setTodosArr(todosArr.slice().sort((a, b) => {
                 if (a.completed && !b.completed) {
@@ -46,38 +63,26 @@ function Todos() {
         case 'alphabetical':
             setTodosArr(todosArr.slice().sort((a, b) => a.title.localeCompare(b.title))); // מיון לפי אלפבית
         case 'random':
-            setTodosArr(todosArr.slice().sort(() => Math.random() - 0.5)); // מיון 
-
+            setTodosArr(todosArr.slice().sort(() => Math.random() - 0.5)); 
         default:
           return todosArr;
       }
     };
-  
-    // פונקציה לחיפוש פריטים לפי קריטריון מסוים
-  
-    
-      function handleSearchIdChange(event){
-        setSearchIdCriteria(event.target.value);
-      };
-    
-      function handleSearchAlphabeticalChange(event){
-        setSearchAlphabeticalCriteria(event.target.value);
-      };
-    
+
       function searchedTodos(todo){
       
             switch (searchCriteria) {
               case 'sequential':
                 return (
-                  todo.id.toString().includes(searchIdCriteria)
+                  todo.id.toString().includes(searchInputCriteria)
                 );
               case 'execution':
                 return (
-                  (searchIdCriteria === '' || (todo.completed ? 'true' : 'false') === searchIdCriteria)
+                  (searchInputCriteria === '' || (todo.completed ? 'true' : 'false') === searchInputCriteria)
                 );
               case 'alphabetical':
                 return (
-                  todo.title.toLowerCase().startsWith(searchAlphabeticalCriteria.toLowerCase())
+                  todo.title.toLowerCase().startsWith(searchInputCriteria.toLowerCase())
                 );
               case 'none':
                 return true;
@@ -89,7 +94,7 @@ function Todos() {
   
 
     useEffect(() => {
-      fetch(`http://localhost:3000/todos?userId=${id}`)
+      fetch(`http://localhost:3000/todos?userId=${userId}`)
           .then((response) => response.json())
           .then((data) => {
               setTodosArr(data);
@@ -98,7 +103,6 @@ function Todos() {
   
       return(
         <>
-        { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr}/>)}) }
 
         <select value={sortCriteria} onChange={handleSortChange}>
           <option value="sequential">sequential</option>
@@ -117,28 +121,23 @@ function Todos() {
       </select>
 
 
-      {sortCriteria === 'sequential' && (
+      {searchCriteria !== 'none'&& (
         <input
-          type="text"
-          placeholder="חיפוש לפי ID"
-          value={searchIdCriteria}
-          onChange={handleSearchIdChange}
+          type='text'
+          placeholder="search term"
+          value={searchInputCriteria}
+          onChange={(event)=> setSearchInputCriteria(event.target.value)}
         />
       )}
 
-      {sortCriteria === 'alphabetical' && (
-        <input
-          type="text"
-          placeholder="חיפוש לפי אות"
-          value={searchAlphabeticalCriteria}
-          onChange={handleSearchAlphabeticalChange}
-        />
-      )}
 
     </div>
+    { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
+
   
     
-      <button onClick={()=>{navigate(`/home/user/${userId}/todos/add`, {state:{userId:userId}})}}>Add An Item To The List</button>
+      <button onClick={()=>{setToAdd(true)}}>Add An Item To The List</button>
+      {toAdd&&<AddNewTodo addToArr={addToArr}/>}
     </>
       )
  }

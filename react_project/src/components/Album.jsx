@@ -4,7 +4,6 @@ import { Photo } from '../Photo';
 import AddNewPhoto from './AddNewPhoto';
 
 function Album () {
-  const [newPhotoUrl, setNewPhotoUrl] = useState('');
   const [photos,setPhotos]=useState([])
   const limit=10
   const [offset, setOffset]=useState(1)

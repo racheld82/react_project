@@ -23,7 +23,9 @@ function Comments(props){
     }
     useEffect(()=>{fetchArr()},[]);
 
+    function addToArr(comment){
 
+    }
 
 
   function handleDeleteComment(commentId){
@@ -56,7 +58,7 @@ function Comments(props){
       <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
       <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)}/>
       <button onClick={()=>{addNewComment}}>Add</button> */}
-      <AddNewComment/>
+      <AddNewComment postId={postId} addToArr={addToArr}/>
     </div>
   );
 };
