@@ -15,6 +15,7 @@ import AddNewPost from './components/AddNewPost';
 import UpdatePost from './components/UpdatePost';
 import AddNewTodo from './components/AddNewTodo';
 import UpdateTodo from './components/UpdateTodo'
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />}/>
           <Route path="/register/details" element={<Details />} />
+          <Route path='*' element={<NotFound/>}/>
         </Routes>
       </Router>
     </>

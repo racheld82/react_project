@@ -36,7 +36,27 @@ import {
         .then(response => response.json())
         .then(data => {
           if (data !== null ) {
-            localStorage.setItem("currentUser", JSON.stringify(data[0])); // Assuming you want to store the first user from the response
+            localStorage.setItem("currentUser", JSON.stringify({
+              "id": `${data[0].id}`,
+              "name": `${data[0].name}`,
+              "username": `${data[0].username}`,
+              "email": `${data[0].email}`,
+            
+                  "street": `${data[0].address.street}`,
+                  "suite": `${data[0].address.suite}`,
+                  "city": `${data[0].address.city}`,
+                  "zipcode": `${data[0].address.zipcode}`,
+            
+                      "lat": `${data[0].address.geo.lat}`,
+                      "lng": `${data[0].address.geo.lng}`,
+              "phone": `${data[0].phone}`,
+
+        
+                  "Cname": `${data[0].company.name}`,
+                  "catchPhrase": `${data[0].company.catchPhrase}`,
+                  "bs": `${data[0].company.bs}`
+ 
+          })); // Assuming you want to store the first user from the response
             // forceUpdate(); // Assuming forceUpdate is a function you defined elsewhere
             setUserId(data[0].id);
 

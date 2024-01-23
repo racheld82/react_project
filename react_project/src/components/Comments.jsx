@@ -24,24 +24,18 @@ function Comments(props){
     useEffect(()=>{fetchArr()},[]);
 
     function addToArr(comment){
-
+      setComments((prevComments) => [...prevComments, comment]);
     }
 
 
-  function handleDeleteComment(commentId){
-    const urlDelete = `http://localhost:3000/todos?id=${commentId}`;
-  
-    fetch(urlDelete, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    }).then(response => response.json()).then(props.deleteFromArr(todo.id))
-    .catch(()=>console.log("delete fail"));
-
-
-    
+  function deleteFromArr(commentId){
+    const updatedArr = todosArr.filter(item => item.id !== commentId);
+    setComments(updatedArr);
   };
+
+  function updateArr(id,name,body){
+    setTodosArr(todosArr.map((item) => {if(item.id === id){item.name=name;item.body=body}}))
+  }
 
   return (
     <div>
@@ -50,7 +44,8 @@ function Comments(props){
           <Comment
             key={comment.id}
             comment={comment}
-            handleDeleteComment={handleDeleteComment}
+            deleteFromArr={deleteFromArr}
+            updateArr={updateArr}
           />
         ))}
       </ul>

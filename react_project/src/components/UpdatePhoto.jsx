@@ -3,15 +3,15 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 
 
-function UpdatePost(props){
-    const post=props.post;
-  const navigate=useNavigate()
-    const [title,setTitle]=useState(post.title);
-    const[body,setBody]=useState(post.body)
+function UpdatePhoto(props){
+    const photo=props.photo;
+    const navigate=useNavigate()
+    const [name,setName]=useState(photo.name);
+    const[url,setUrl]=useState(photo.url)
     const userId=JSON.parse(localStorage.getItem("currentUser")).id
-    async function updatePost(){
+    async function updatePhoto(){
         try {
-            const response = await fetch(`http://localhost:3000/posts/${post.id}`, {
+            const response = await fetch(`http://localhost:3000/posts/${photo.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,17 +26,17 @@ function UpdatePost(props){
                 throw new Error('Network response was not ok');
             }
     
-            const updatedPost = await response.json();
-            props.updateArr(updatedPost.id, title,body);
+            const updatedPhoto = await response.json();
+            props.updateArr(updatedPhoto.id, name,url);
         } catch (error) {
             console.error('Error updating TODO:', error);
         }
     }
     return( <>
-        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)}/>
-        <input type='text' value={body} onChange={(e) => setBody(e.target.value)}/>
-        <button onClick={updatePost}>Update</button>
+        <input type='text' value={name} onChange={(e) => setName(e.target.value)}/>
+        <input type='text' value={url} onChange={(e) => setUrl(e.target.value)}/>
+        <button onClick={updatePhoto}>Update</button>
         </>)
 }
 
-export default UpdatePost
+export default UpdatePhoto

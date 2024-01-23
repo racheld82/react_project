@@ -35,7 +35,27 @@ function Details() {
         },
         body: JSON.stringify(user)
     }).then(response => response.json())
-    .then(localStorage.setItem("currentUser",JSON.stringify({"name":name, "id":id,"email":email})))
+    .then(localStorage.setItem("currentUser", JSON.stringify({
+      "id": `${id}`,
+      "name": `${name}`,
+      "username": `${data.state.name}`,
+      "email": `${email}`,
+    
+          "street": `${street}`,
+          "suite": `${suite}`,
+          "city": `${city}`,
+          "zipcode": `${zipcode}`,
+    
+              "lat": `${lat}`,
+              "lng": `${lng}`,
+      "phone": `${phone}`,
+
+
+          "name": `${companyName}`,
+          "catchPhrase": `${catchParse}`,
+          "bs": `${bs}`
+
+  })))
     .then(navigate(`/home/user/${id}`))
    
     }

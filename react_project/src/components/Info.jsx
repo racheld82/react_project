@@ -12,30 +12,30 @@ import { useIdContext } from './Login';
 
 function Info() {
     const navigate=useNavigate()
-    const [user,setUser]=useState({});
+    // const [user,setUser]=useState({});
     //const name=JSON.parse(localStorage.getItem("currentUser")).name
     // const userId = useIdContext();
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
+    const user=JSON.parse(localStorage.getItem("currentUser"))
 
-    useEffect(() => {
-        console.log(userId);
-      fetch(`http://localhost:3000/users?userId=${userId}`)
-          .then(response => response.json())
-          .then(data => {
-              if (data.length > 0) {
-                  setUser(data[0]);
-              }
-          })
-          .catch(error => {
-              console.error('Error fetching user data:', error);
-          });
-  }, []);
+//     useEffect(() => {
+//         console.log(userId);
+//       fetch(`http://localhost:3000/users?userId=${userId}`)
+//           .then(response => response.json())
+//           .then(data => {
+//               if (data.length > 0) {
+//                   setUser(data[0]);
+//               }
+//           })
+//           .catch(error => {
+//               console.error('Error fetching user data:', error);
+//           });
+//   }, []);
 
     
         
    
     function hideInfo(){
-        navigate(`/home/user/${userId}`)
+        navigate(`/home/user/${user.id}`)
     }
    return(
     <>
@@ -44,11 +44,11 @@ function Info() {
         <p> email: {user.email}</p>
         <p> phone: {user.phone}</p>
         <p> password: {user.website}</p>
-        {/* <p>adress:{user.address}</p> */}
-        {/* <p> street: {user.address.street}  suite:{user.address.suite} zipcode:{user.address.zipcode}</p>
-        <p> geo:  lat:{user.address.geo.lat}  lng:{user.address.geo.lng}</p> */}
-        {/* <p>company:{user.company}</p> */}
-        {/* <p> name: {user.company.name} catch parse:{user.company.catchParse} bs:{user.company.bs}</p> */}
+        <p>adress:</p>
+        <p> street: {user.street}  suite:{user.suite} zipcode:{user.zipcode}</p>
+        <p> geo:  lat:{user.lat}  lng:{user.lng}</p>
+        <p>company:</p>
+        <p> name: {user.Cname}</p><p> catch parse:{user.catchPharse} </p><p>bs:{user.bs}</p>
         <button onClick={hideInfo}>Hide info</button>
         
     </>

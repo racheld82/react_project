@@ -24,7 +24,7 @@ function AddNewAlbum(props){
            'Content-Type': 'application/json',
         },
         body: JSON.stringify(album)
-    }).then(response => response.json()).then(props.AddNewAlbum(album)).catch(()=>{console.log("adding fail")})
+    }).then(response => response.json()).then(props.addAlbum(album)).catch(()=>{console.log("adding fail")})
     fetch("http://localhost:3000/nextID/1", {
         method: "PATCH",
         body: JSON.stringify({

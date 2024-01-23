@@ -27,7 +27,7 @@ function Todos() {
     }
 
     function addToArr(todo){
-  
+      setTodosArr((prevTodos) => [...prevTodos, todo]);
     }
 
     function handleSortChange(event) {
@@ -42,13 +42,11 @@ function Todos() {
     function sortTodos () {
       switch (sortCriteria) {
         case 'sequential':
-            setTodosArr(todosArr.sort((a, b) => {  if (a.id >b.id) {
-              return -1; 
-            } else if (a.id<b.id) {
-              return 1; 
-            } else {
-              return 0; 
-            }})); 
+          let tempTodos = [];
+          todosArr.map(t => tempTodos.push(t));
+          tempTodos.sort((a, b) => (a.id < b.id) ? -1 : 1);
+          setTodosArr(tempTodos)
+            break;
         case 'execution':
             setTodosArr(todosArr.slice().sort((a, b) => {
                 if (a.completed && !b.completed) {
@@ -59,13 +57,19 @@ function Todos() {
                   return 0; 
                 }
               })
+            
         ); 
+        break;
         case 'alphabetical':
-            setTodosArr(todosArr.slice().sort((a, b) => a.title.localeCompare(b.title))); // מיון לפי אלפבית
+          let tempTodos1 = [];
+          todosArr.map(t => tempTodos1.push(t));
+          tempTodos1.sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase()) ? -1 : 1);
+          setTodosArr(tempTodos1)
+            break;
         case 'random':
             setTodosArr(todosArr.slice().sort(() => Math.random() - 0.5)); 
-        default:
-          return todosArr;
+            break;
+       
       }
     };
 

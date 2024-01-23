@@ -1,36 +1,56 @@
-import React, { useState } from 'react'
-import { CommentClass } from '../CommentClass';
+import React, { useState } from "react";
+import { Photo } from "../Photo";
+import { useLocation,useParams } from 'react-router-dom';
 
-function AddNewComment(props){
-  
-    const [name,setName]=useState('');
-    const [email,setEmail]=useState("")
-    const [body,setBody]=useState('')
 
-    function addNewComment(){
-        const comment=new CommentClass(props.postId,name,email,body);
-        const urlPost = `http://localhost:3000/comments`;
-        fetch(urlPost, {
+function AddNewPhoto(props){
+
+    const [title,setTitle]=useState('');
+    const [url,setUrl]=useState('')
+    const albumId = useParams();
+    console.log(albumId)
+        async function addNewPhoto(){
+        let id;
+        await fetch("http://localhost:3000/nextID", {
+            method: 'GET'
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                id = json[0].nextPhotoId
+            });
+        const photo=new Photo(id,props.albumId,title,url)
+      fetch("http://localhost:3000/photos", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(comment),
-          }).then(response => {response.json();
-        }).catch(()=>{console.log("adding fail")})
+        body: JSON.stringify(photo),
+        }).then(response => {response.json();
+        }).then(props.addToArr(photo)).catch(()=>{console.log("adding fail")})
+
+        fetch("http://localhost:3000/nextID/1", {
+        method: "PATCH",
+        body: JSON.stringify({
+            "nextPhotoId": id + 1
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+        },
+    })
+        .then((response) => response.json())
     }
       
 
     return(
         <>
-        <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)}/>
-        <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
-        <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)}/>
-
-        <button onClick={addNewComment}>Add</button>
+        <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)}/>
+        <input type='text' placeholder='URL' onChange={(e) => setUrl(e.target.value)}/>
+        <button onClick={addNewPhoto}>Add</button>
         </>
     )
 
+
 }
 
-export default AddNewComment
+
+export default AddNewPhoto

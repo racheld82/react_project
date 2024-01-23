@@ -10,15 +10,16 @@ function Todo(props){
     const id=JSON.parse(localStorage.getItem("currentUser")).id
 
     function deleteTodo(){
-        const urlDelete = `https://localhost:3000/todos/${todo.id}`;
-  
-        fetch(urlDelete, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        }).then(response => response.json()).then(props.deleteFromArr(todo.id))
-        .catch(()=>console.log("delete fail"));
+    fetch(`http://localhost:3000/todos/${todo.id}`, {
+      method: 'DELETE',
+      headers: {
+      'Content-Type': 'application/json',
+      }}).then(response => {
+        response.json();
+      }).catch(() => {
+      console.log("delete fail");
+      });
+      props.deleteFromArr(todo.id);
   
       }
   
