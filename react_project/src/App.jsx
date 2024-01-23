@@ -27,20 +27,20 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/home/user/:id" element={<Home />}/>
+          <Route path="/home/user/:userId" element={<Home />}/>
           {/* <Route index element={<Navigate to={`/home/user/${id}/info`} />} /> */}
-          <Route path="/home/user/:id/info" element={<Info />} />
-          <Route path="/home/user/:id/todos" element={<Todos />} />
-          <Route path="/home/user/:id/todos/add" element={<AddNewTodo />} />
-          <Route path="/home/user/:id/todos/:id/update" element={<UpdateTodo />} />
-          <Route path="/home/user/:id/posts" element={<Posts />} />
-          <Route path="/home/user/:id/posts/:id/comments" element={<Comments />} />
-          <Route path="/home/user/:id/posts/add" element={<AddNewPost />} />
+          <Route path="/home/user/:userId/info" element={<Info />} />
+          <Route path="/home/user/:userId/todos" element={<Todos />} />
+          <Route path="/home/user/:userId/todos/add" element={<AddNewTodo />} />
+          <Route path="/home/user/:userId/todos/:updateId/update" element={<UpdateTodo />} />
+          <Route path="/home/user/:userId/posts" element={<Posts />} />
+          <Route path="/home/user/:userId/posts/:commentId/comments" element={<Comments />} />
+          <Route path="/home/user/:userId/posts/add" element={<AddNewPost />} />
           {/* <Route path="/home/user/:id/posts/:id/update" element={<UpdatePost />} /> */}
 
 
-          <Route path="/home/user/:id/albums" element={<Albums />} />
-          <Route path="/home/user/:id/albums/:id" element={<Album/>} />
+          <Route path="/home/user/:userId/albums" element={<Albums />} />
+          <Route path="/home/user/:userId/albums/:albumId" element={<Album/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />}/>
           <Route path="/register/details" element={<Details />} />

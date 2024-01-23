@@ -1,14 +1,12 @@
 import {React, useState} from "react";
-import {useLocation, useNavigate} from 'react-router-dom';
+import "../style.css";
 
 
 
 function UpdateComment(props){
     const comment=props.comment;
-    const navigate=useNavigate()
     const [name,setName]=useState(comment.name);
     const[body,setBody]=useState(comment.body)
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
     async function updateComment(){
         try {
             const response = await fetch(`http://localhost:3000/comments/${comment.id}`, {

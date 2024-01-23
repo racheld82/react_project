@@ -1,24 +1,22 @@
 import {React, useState} from "react";
-import {useLocation, useNavigate} from 'react-router-dom';
+import "../style.css";
 
 
 
 function UpdatePhoto(props){
     const photo=props.photo;
-    const navigate=useNavigate()
-    const [name,setName]=useState(photo.name);
+    const [title,setTitle]=useState(photo.title);
     const[url,setUrl]=useState(photo.url)
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
     async function updatePhoto(){
         try {
-            const response = await fetch(`http://localhost:3000/posts/${photo.id}`, {
+            const response = await fetch(`http://localhost:3000/photos/${photo.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     title: title,
-                    body: body
+                    url: url
                 }),
             });
     
@@ -33,9 +31,9 @@ function UpdatePhoto(props){
         }
     }
     return( <>
-        <input type='text' value={name} onChange={(e) => setName(e.target.value)}/>
+        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)}/>
         <input type='text' value={url} onChange={(e) => setUrl(e.target.value)}/>
-        <button onClick={updatePhoto}>Update</button>
+        <button onClick={updatePhoto}>Confirm</button>
         </>)
 }
 

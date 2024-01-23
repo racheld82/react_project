@@ -3,8 +3,7 @@ import { useState } from 'react'
 import {
   useNavigate
 } from "react-router-dom";
-import Details from './Details';
-
+import "../style.css";
 
 function Register() {
     const [name, setName] = useState(null);

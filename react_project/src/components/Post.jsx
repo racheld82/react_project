@@ -1,19 +1,17 @@
 import React, { useState, useContext } from 'react';
-import Comments from './Comments';
 import UpdatePost from './UpdatePost';
 import {
-  Navigate,
   useNavigate
 } from "react-router-dom";
-import { useIdContext } from './Login';
-
+import { UserContext } from '../UserProvider';
+import "../style.css";
 
 function Post(props) {
   const post=props.post;
   const [isExpanded, setIsExpanded] = useState(false);
   const[toUpdate,setToUpdate]=useState(false)
   const navigate=useNavigate()
-  const userId = useContext(useIdContext);
+  const { userID } = useContext(UserContext);
 
   const style={
 
@@ -39,7 +37,7 @@ function Post(props) {
 
   return (
     <div>
-      <p>{props.post.id} - {post.title}</p>
+      <p>{post.id} - {post.title}</p>
       <button onClick={handleExpand}>Expand</button>
       <button onClick={deletePost}>Delete</button>
       <button onClick={()=>{setToUpdate(true)}}>Update</button>
@@ -48,7 +46,7 @@ function Post(props) {
       {isExpanded && (
         <div>
           <p>{post.body}</p>
-          <button onClick={()=>navigate(`/home/user/${userId}/posts/${post.id}/comments`, {state:{postId:post.id}})}>Comments</button>
+          <button onClick={()=>navigate(`/home/user/${userID}/posts/${post.id}/comments`, {state:{postId:post.id}})}>Comments</button>
         </div>
       )}
     </div>

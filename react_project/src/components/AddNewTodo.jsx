@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Todo } from '../Todo';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { UserContext } from '../UserProvider';
+import "../style.css";
 
 function AddNewTodo(props){
     
     const [newTodo,setNewTodo]=useState('');
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id;
-    const navigate=useNavigate()
+    const { userID } = useContext(UserContext);
+
     async function addNewTodo(){
         let id;
         await fetch("http://localhost:3000/nextID", {
@@ -17,7 +18,7 @@ function AddNewTodo(props){
                 id = json[0].nextTodoId
             });
 
-        let todo=new Todo(userId,id,newTodo)
+        let todo=new Todo(userID,id,newTodo)
         const urlPost = `http://localhost:3000/todos`;
         fetch(urlPost, {
         method: 'POST',

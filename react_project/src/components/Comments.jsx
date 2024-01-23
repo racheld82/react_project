@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Comment from './Comment';
-import {CommentClass} from '../CommentClass';
-import UpdatePost from './UpdatePost';
 import {
   useLocation
 } from "react-router-dom";
 import AddNewComment from './AddNewComment';
+import "../style.css";
 
 
 
-function Comments(props){
+function Comments(){
   const [comments, setComments] = useState([]);
   const data=useLocation();
   const postId = data.state.postId;
@@ -29,7 +28,7 @@ function Comments(props){
 
 
   function deleteFromArr(commentId){
-    const updatedArr = todosArr.filter(item => item.id !== commentId);
+    const updatedArr = comments.filter(item => item.id !== commentId);
     setComments(updatedArr);
   };
 

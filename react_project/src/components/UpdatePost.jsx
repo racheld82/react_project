@@ -1,14 +1,11 @@
 import {React, useState} from "react";
-import {useLocation, useNavigate} from 'react-router-dom';
-
+import "../style.css";
 
 
 function UpdatePost(props){
     const post=props.post;
-  const navigate=useNavigate()
     const [title,setTitle]=useState(post.title);
     const[body,setBody]=useState(post.body)
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
     async function updatePost(){
         try {
             const response = await fetch(`http://localhost:3000/posts/${post.id}`, {

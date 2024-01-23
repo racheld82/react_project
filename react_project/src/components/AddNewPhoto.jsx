@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Photo } from "../Photo";
-import { useLocation,useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import "../style.css";
 
 
 function AddNewPhoto(props){

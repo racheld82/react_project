@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UpdateComment from './UpdateComment';
+import "../style.css";
 
 function Comment(props)  {
   const[toUpdate,setToUpdate]=useState(false)
@@ -7,15 +8,18 @@ function Comment(props)  {
   const email=JSON.parse(localStorage.getItem("currentUser")).email
 
   function deleteComment(){
-    fetch(`http://localhost:3000/posts/${comment.id}`, {
-      method: 'DELETE',
-      headers: {
-      'Content-Type': 'application/json',
-      }}).then(response => {
-        response.json();
-      }).catch(() => {
-      console.log("delete fail");
-      });
+    console.log(comment.id);
+      fetch(`http://localhost:3000/comments/${comment.id}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+        }}).then(response => {
+          response.json();
+        }).catch(() => {
+        console.log("delete fail");
+        });
+
+
       props.deleteFromArr(comment.id);
   
   }

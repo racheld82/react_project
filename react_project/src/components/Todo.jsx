@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import UpdateTodo from "./UpdateTodo";
-import { useNavigate } from "react-router-dom";
+import "../style.css";
 
 function Todo(props){
 
     let todo=props.todo;
-    const navigate=useNavigate()
     const[toUpdate,setToUpdate]=useState(false)
-    const id=JSON.parse(localStorage.getItem("currentUser")).id
 
     function deleteTodo(){
     fetch(`http://localhost:3000/todos/${todo.id}`, {
@@ -20,7 +18,6 @@ function Todo(props){
       console.log("delete fail");
       });
       props.deleteFromArr(todo.id);
-  
       }
   
       function updateStatusTodo(){
@@ -47,7 +44,6 @@ function Todo(props){
     return(
         <>
         <p>id:{todo.id} title:{todo.title}</p>
-        {/* <input type='checkbox' checked={todo.completed} onChange={()=>{todo.completed=checked}} value={todo.completed}>Completed?</input> */}
         <button onClick={deleteTodo}>Delete</button>
         <button onClick={updateStatusTodo}>Update Status</button>
         <button onClick={()=>{setToUpdate(true)}}>Update</button>

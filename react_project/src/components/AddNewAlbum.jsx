@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import { Post } from '../Post';
-import { json, useLocation } from 'react-router-dom';
+import React, { useState, useContext } from 'react'
 import { Album } from '../Album';
+import { UserContext } from '../UserProvider';
+import "../style.css";
 
 function AddNewAlbum(props){
   
     const [title,setTitle]=useState('');
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
+    const { userID } = useContext(UserContext);
+
 
     async function addNewPost(){
         let id;
@@ -17,7 +18,7 @@ function AddNewAlbum(props){
             .then((json) => {
                 id = json[0].nextAlbumId
             });
-        const album=new Album(id,userId,title)
+        const album=new Album(id,userID,title)
       fetch("http://localhost:3000/albums", {
         method: 'POST',
         headers: {
@@ -48,37 +49,3 @@ function AddNewAlbum(props){
 }
 
 export default AddNewAlbum
-
-// import React, { useState } from 'react'
-// import { Post } from '../Post';
-// import { json, useLocation } from 'react-router-dom';
-// import { Album } from '../Album';
-
-// function AddNewAlbum(props){
-  
-//     const [title,setTitle]=useState('');
-//     const id=JSON.parse(localStorage.getItem("currentUser")).id
-
-//     function addNewPost(){
-//         const album=new Album(id,title)
-//         console.log(album)
-//       fetch("http://localhost:3000/albums", {
-//         method: 'POST',
-//         headers: {
-//            'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(album)
-//     }).then(response => response.json()).then(props.addAlbum(album)).catch(()=>{console.log("adding fail")})
-//     }
-      
-
-//     return(
-//         <>
-//         <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)}/>
-//         <button onClick={addNewPost}>Add</button>
-//         </>
-//     )
-
-// }
-
-// export default AddNewAlbum

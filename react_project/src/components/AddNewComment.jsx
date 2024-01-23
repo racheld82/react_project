@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import { CommentClass } from '../CommentClass';
+import "../style.css";
 
 function AddNewComment(props){
-    const [, updateState] = useState();
-    const forceUpdate = React.useCallback(() => updateState({}), []);
-
-  
     const [name,setName]=useState('');
     const [email,setEmail]=useState("")
     const [body,setBody]=useState('')
@@ -41,6 +38,7 @@ function AddNewComment(props){
         },
     })
         .then((response) => response.json())
+        console.log(comment.id)
     
     }
       

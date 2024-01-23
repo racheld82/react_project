@@ -1,33 +1,50 @@
 import React from "react";
 import { useState,useEffect ,useContext} from "react"
 import Todo from "./Todo"
-import UpdateTodo from "./UpdateTodo";
 import AddNewTodo from './AddNewTodo'
-import { useIdContext } from './Login';
-import { useNavigate } from "react-router-dom";
+import { UserContext } from '../UserProvider';
+import "../style.css";
 
 
 function Todos() {
-    const [todosArr, setTodosArr]=useState([])
+    const [todoArr, setTodos]=useState([])
     const [toAdd,setToAdd]=useState(false)
     const [sortCriteria, setSortCriteria] = useState('none'); // קריטריון מיון
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
-    const [searchInputCriteria, setSearchInputCriteria] = useState(''); // קריטריון חיפוש לפי ID
-    // const userId=useContext(useIdContext);
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
-    const navigate=useNavigate()
-    function deleteFromArr(id){
-      const updatedArr = todosArr.filter(item => item.id !== id);
-      setTodosArr(updatedArr);
+    const [searchInputCriteria, setSearchInputCriteria] = useState(''); // קריטריון חיפוש לפי userID
+    const { userID } = useContext(UserContext);
+    const userId = userID;
+
+    console.log(userID)
+    console.log("userId")
+    console.log(userId)
+
+    useEffect(() => {
+      getTodo();
+  }, [])
+  
+  function getTodo(){
+    fetch(`http://localhost:3000/todos?userId=${userId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+        setTodos(data);
+    })
+  }
+
+
+    function deleteFromArr(todoId){
+      const updatedArr = todoArr.filter(item => item.id !== todoId);
+      setTodos(updatedArr);
     }
 
-    function updateArr(id,title){
-      setTodosArr(todosArr.map((item) => {if(item.id === id){item.title=title}}))
+    function updateArr(todoId,title){
+      setTodos(todoArr.map((item) => {if(item.id === todoId){item.title=title}}))
 
     }
 
     function addToArr(todo){
-      setTodosArr((prevTodos) => [...prevTodos, todo]);
+      setTodos((prevTodos) => [...prevTodos, todo]);
     }
 
     function handleSortChange(event) {
@@ -43,12 +60,12 @@ function Todos() {
       switch (sortCriteria) {
         case 'sequential':
           let tempTodos = [];
-          todosArr.map(t => tempTodos.push(t));
-          tempTodos.sort((a, b) => (a.id < b.id) ? -1 : 1);
-          setTodosArr(tempTodos)
+          todoArr.map(t => tempTodos.push(t));
+          tempTodos.sort((a, b) => (a.userID < b.userID) ? -1 : 1);
+          setTodos(tempTodos)
             break;
         case 'execution':
-            setTodosArr(todosArr.slice().sort((a, b) => {
+            setTodos(todoArr.slice().sort((a, b) => {
                 if (a.completed && !b.completed) {
                   return -1; 
                 } else if (!a.completed && b.completed) {
@@ -62,12 +79,12 @@ function Todos() {
         break;
         case 'alphabetical':
           let tempTodos1 = [];
-          todosArr.map(t => tempTodos1.push(t));
+          todoArr.map(t => tempTodos1.push(t));
           tempTodos1.sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase()) ? -1 : 1);
-          setTodosArr(tempTodos1)
+          setTodos(tempTodos1)
             break;
         case 'random':
-            setTodosArr(todosArr.slice().sort(() => Math.random() - 0.5)); 
+            setTodos(todoArr.slice().sort(() => Math.random() - 0.5)); 
             break;
        
       }
@@ -78,7 +95,7 @@ function Todos() {
             switch (searchCriteria) {
               case 'sequential':
                 return (
-                  todo.id.toString().includes(searchInputCriteria)
+                  todo.userID.toString().includes(searchInputCriteria)
                 );
               case 'execution':
                 return (
@@ -95,15 +112,6 @@ function Todos() {
             }
  
       };
-  
-
-    useEffect(() => {
-      fetch(`http://localhost:3000/todos?userId=${userId}`)
-          .then((response) => response.json())
-          .then((data) => {
-              setTodosArr(data);
-          })
-  }, [])
   
       return(
         <>
@@ -136,7 +144,7 @@ function Todos() {
 
 
     </div>
-    { todosArr.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
+    { todoArr.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
 
   
     

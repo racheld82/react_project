@@ -1,19 +1,16 @@
-import React, { useId } from "react";
 import { useState,useEffect, useContext } from "react";
 import Post from "./Post";
-import AddNewPost from './AddNewPost'
 import {
-  Navigate,
   useNavigate
 } from "react-router-dom";
-import { useIdContext } from './Login';
+import { UserContext } from '../UserProvider';
+import "../style.css";
 
 function Posts(){
   const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('none'); 
-  // const userId=useContext(useIdContext);
-  const userId=JSON.parse(localStorage.getItem("currentUser")).id
+  const { userID } = useContext(UserContext);
 
   const navigate=useNavigate();
 
@@ -22,8 +19,7 @@ function Posts(){
 }, [])
 
 function getPost(){
-  console.log(userId)
-  fetch(`http://localhost:3000/posts?userId=${userId}`)
+  fetch(`http://localhost:3000/posts?userId=${userID}`)
   .then((response) => response.json())
   .then((data) => {
       setPosts(data);
@@ -39,7 +35,13 @@ function getPost(){
   }
 
   function updateArr(id,title,body){
-    setPosts(posts.map((item) => {if(item.id === id){item.body=body;item.title=title}}))
+    const index = posts.findIndex(item => item.id === id);
+    const postsArr = posts;
+    postsArr[index].title = title;
+    postsArr[index].body = body;
+    setPosts(postsArr)
+    //setPosts(posts.map((item) => {if(item.id === id){item.userId=item.userId;item.id=item.id;item.body=body;item.title=title}}));
+
   }
 
   function filteredPosts(post){
@@ -78,11 +80,11 @@ function getPost(){
 
 
       {posts.map((post) => (filteredPosts(post)&&
-        <Post post={post} deletePost={deletePost} updateArr={updateArr}/>
+        <Post key={post.id} post={post} deletePost={deletePost} updateArr={updateArr}/>
       ))}
     </div>
 
-    <button onClick={()=>navigate(`/home/user/${userId}/posts/add`)}>Add New Post</button>
+    <button onClick={()=>navigate(`/home/user/${userID}/posts/add`)}>Add New Post</button>
     </>
   );
 };

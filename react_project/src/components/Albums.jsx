@@ -1,30 +1,30 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Album from './Album';
 import { Link } from 'react-router-dom';
-import { useIdContext } from './Login';
 import AddNewAlbum from './AddNewAlbum';
 import styles from '../Albums.module.css';
+import { UserContext } from '../UserProvider';
+import "../style.css";
+
 
 function Albums(){
   const [filter, setFilter] = useState('all');
   const[searchTerm,setSearchTerm] =useState('')
   const [albums,setAlbums]=useState([])
-//  const userId = useIdContext();
-const userId=JSON.parse(localStorage.getItem("currentUser")).id
-
+  const { userID } = useContext(UserContext);
 
   function handleFilterChange(newFilter){
     setFilter(newFilter);
   };
 
   useEffect(() => {
-    console.log(userId)
-    fetch(`http://localhost:3000/albums?userId=${userId}`)
+    console.log(userID)
+    fetch(`http://localhost:3000/albums?userId=${userID}`)
         .then((response) => response.json())
         .then((data) => {
             setAlbums(data);
         })
 }, [])
+
 
 
 function searchAlbum(album){
@@ -69,7 +69,7 @@ function searchAlbum(album){
          albums.map((album) => (
         searchAlbum(album)&&(
             <li className={styles.albumListItem} key={album.id}>
-                      <Link to={{ pathname: `/home/user/${userId}/albums/${album.id}`}} className={styles.albumLink}>{album.id} - {album.title} <br /></Link>
+                      <Link to={{ pathname: `/home/user/${userID}/albums/${album.id}`}} className={styles.albumLink}>{album.id} - {album.title} <br /></Link>
           </li>
         )
         ))}
@@ -106,7 +106,7 @@ export default Albums;
 //           searchAlbum(album) && (
 //             <li className={styles.albumListItem} key={album.id}>
 //               <Link
-//                 to={{ pathname: `/home/user/${userId}/albums/${album.id}` }}
+//                 to={{ pathname: `/home/user/${userID}/albums/${album.id}` }}
 //                 className={styles.albumLink}
 //               >
 //                 {album.id} - {album.title} <br />

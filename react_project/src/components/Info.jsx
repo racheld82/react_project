@@ -1,14 +1,9 @@
-import { useState, useEffect } from 'react'
 import React from 'react';
 import { useRef } from 'react'
 import {
-    Link,
-  useLocation,
   useNavigate
 } from "react-router-dom";
-import { User } from '../User';
-import { useIdContext } from './Login';
-
+import "../style.css";
 
 function Info() {
     const navigate=useNavigate()
@@ -43,7 +38,6 @@ function Info() {
         <p> user name: {user.username}</p>
         <p> email: {user.email}</p>
         <p> phone: {user.phone}</p>
-        <p> password: {user.website}</p>
         <p>adress:</p>
         <p> street: {user.street}  suite:{user.suite} zipcode:{user.zipcode}</p>
         <p> geo:  lat:{user.lat}  lng:{user.lng}</p>

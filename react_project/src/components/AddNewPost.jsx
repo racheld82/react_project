@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Post } from '../Post';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../UserProvider';
+import "../style.css";
 
 function AddNewPost(){
   
@@ -8,7 +10,7 @@ function AddNewPost(){
     const [body,setBody]=useState('')
     const navigate=useNavigate()
     const data=useLocation()
-    const userId=JSON.parse(localStorage.getItem("currentUser")).id
+    const { userID } = useContext(UserContext);
 
     async function addNewPost(){
         let id;
