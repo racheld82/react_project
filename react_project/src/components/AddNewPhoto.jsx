@@ -19,7 +19,7 @@ function AddNewPhoto(props){
             .then((json) => {
                 id = json[0].nextPhotoId
             });
-        const photo=new Photo(id,props.albumId,title,url,url)
+        const photo=new Photo(id,props.albumId,title,url)
       fetch("http://localhost:3000/photos", {
         method: 'POST',
         headers: {
