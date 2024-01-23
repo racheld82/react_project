@@ -61,6 +61,7 @@ function searchAlbum(album){
 
   return (
     <div className={styles.albumsContainer}>
+      <Link to={`/home/user/${userID}`}>Back...</Link>
       <h2 className={styles.albumsHeader}>Albums</h2>
           <select value={filter} onChange={(e) => handleFilterChange(e.target.value)} className={styles.filterSelect}>
             <option value="all">All Albums</option>

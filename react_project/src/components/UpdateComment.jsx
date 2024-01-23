@@ -9,7 +9,7 @@ function UpdateComment(props){
     const[body,setBody]=useState(comment.body)
     async function updateComment(){
         try {
-            const response = await fetch(`http://localhost:3000/comments/${comment.id}`, {
+            const response = await fetch(`http://localhost:3000/comments?id=${comment.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
