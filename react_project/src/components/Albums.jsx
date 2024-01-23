@@ -53,6 +53,12 @@ function searchAlbum(album){
   setAlbums((prevAlbums) => [...prevAlbums, album]);
   };
 
+  // function addAlbum(id, title, body) {
+  //   setComments(comments => comments.map((comment) => 
+  //     (comment.id === id ? { ...comment, body: body, title: title } : comment)
+  //   ));
+  // }
+
   return (
     <div className={styles.albumsContainer}>
       <h2 className={styles.albumsHeader}>Albums</h2>

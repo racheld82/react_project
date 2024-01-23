@@ -14,10 +14,6 @@ const UserProvider = ({ children }) => {
     setUserID(id);
   };
 
-//   const setCurrentUser = (user) => {
-//     setUser(user);
-//   };
-
   return (
     <UserContext.Provider value={{ userID, updateUserID }}>
       {children}

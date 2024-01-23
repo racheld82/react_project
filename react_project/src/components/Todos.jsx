@@ -8,6 +8,7 @@ import "../style.css";
 
 function Todos() {
     const [todoArr, setTodos]=useState([])
+    const [originalTodoArr, setOriginalTodoArr] = useState([]);
     const [toAdd,setToAdd]=useState(false)
     const [sortCriteria, setSortCriteria] = useState('none'); // קריטריון מיון
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
@@ -22,6 +23,11 @@ function Todos() {
     useEffect(() => {
       getTodo();
   }, [])
+
+  useEffect(() => {
+    setOriginalTodoArr([...todoArr]);
+    sortTodos();
+  }, [sortCriteria]);
   
   function getTodo(){
     fetch(`http://localhost:3000/todos?userId=${userId}`)
@@ -38,10 +44,12 @@ function Todos() {
       setTodos(updatedArr);
     }
 
-    function updateArr(todoId,title){
-      setTodos(todoArr.map((item) => {if(item.id === todoId){item.title=title}}))
-
+    function updateArr(todoId, title) {
+      setTodos(todoArr => todoArr.map((todo) => 
+        (todo.id === todoId ? { ...todo, title: title } : todo)
+      ));
     }
+
 
     function addToArr(todo){
       setTodos((prevTodos) => [...prevTodos, todo]);
@@ -49,6 +57,7 @@ function Todos() {
 
     function handleSortChange(event) {
       setSortCriteria(event.target.value);
+      console.log(event.target.value);
       sortTodos();
     };
   
@@ -59,11 +68,10 @@ function Todos() {
     function sortTodos () {
       switch (sortCriteria) {
         case 'sequential':
-          let tempTodos = [];
-          todoArr.map(t => tempTodos.push(t));
-          tempTodos.sort((a, b) => (a.userID < b.userID) ? -1 : 1);
-          setTodos(tempTodos)
-            break;
+        let tempTodos = [...originalTodoArr];
+        tempTodos.sort((a, b) => (a.userID < b.userID) ? -1 : 1);
+        setTodos(tempTodos);
+        break;
         case 'execution':
             setTodos(todoArr.slice().sort((a, b) => {
                 if (a.completed && !b.completed) {

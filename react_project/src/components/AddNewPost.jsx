@@ -11,7 +11,6 @@ function AddNewPost(){
     const navigate=useNavigate()
     const data=useLocation()
     const { userID } = useContext(UserContext);
-
     async function addNewPost(){
         let id;
         await fetch("http://localhost:3000/nextID", {
@@ -21,7 +20,7 @@ function AddNewPost(){
             .then((json) => {
                 id = json[0].nextPostId
             });
-        let post=new Post(id,userId,title,body);
+        let post=new Post(id,userID,title,body);
       fetch("http://localhost:3000/posts", {
         method: 'POST',
         headers: {
@@ -39,7 +38,7 @@ function AddNewPost(){
             },
         })
             .then((response) => response.json())
-            .then(navigate(`/home/user/${userId}/posts`))
+            .then(navigate(`/home/user/${userID}/posts`))
     }
 
     return(

@@ -6,11 +6,12 @@ import "../style.css";
 
 function Album () {
   const [photos,setPhotos]=useState([])
-  const limit=10
-  const [offset, setOffset]=useState(1)
   const[fetchTimes,setFetchTimes]=useState(1)
   const { albumId } = useParams();
   const [update, setUpdate] = useState(null);
+  const perPage = 12;
+  const [page, setPage] = useState(1);
+  const [start,setStart]=useState(1)
 
 
   function addToArr(photo){
@@ -38,7 +39,7 @@ function Album () {
 
 
   function fetchPhotos(){
-    fetch(`http://localhost:3000/photos?albumId=${albumId}`)
+    fetch(`http://localhost:3000/photos?albumId=${albumId}&_page=${page}&_limit=${perPage}&_start=${start}`)
        .then((response) => response.json())
        .then((data) => {
            console.log(data)
@@ -53,7 +54,7 @@ function Album () {
       <h2>Album {albumId}</h2>
       <AddNewPhoto albumId={albumId} addToArr={addToArr}/>
   
-      {photos.map((photo) => (
+      {photos.slice(0,10*fetchTimes).map((photo) => (
         <div key={photo.id}>
           <img src={photo.thumbnailUrl} alt={photo.title} />
           <button onClick={() => handleDeleteClick(photo.id)}>Delete</button>
@@ -62,7 +63,7 @@ function Album () {
         </div>
         
       ))}
-       <button onClick={()=>{setOffset(photos[photos.length-1].id);setFetchTimes(fetchTimes+1);fetchPhotos()}}></button>
+       <button onClick={()=>{setPage(page+1);setStart(photos[photos.length-1].id);fetchPhotos();setFetchTimes(fetchTimes+1);}}>load more</button>
     </div>
    
   );

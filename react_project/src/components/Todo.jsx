@@ -5,7 +5,8 @@ import "../style.css";
 function Todo(props){
 
     let todo=props.todo;
-    const[toUpdate,setToUpdate]=useState(false)
+    const[toUpdate,setToUpdate]=useState(false);
+    const[completed, setCompleted] = useState(todo.completed);
 
     function deleteTodo(){
     fetch(`http://localhost:3000/todos/${todo.id}`, {
@@ -22,12 +23,12 @@ function Todo(props){
   
       function updateStatusTodo(){
         fetch(`http://localhost:3000/todos/${todo.id}`, {
-                method: 'PUT',
+                method: 'PATCH',
            headers: {
           'Content-Type': 'application/json',
            },
           body: JSON.stringify({
-              completed: todo.completed,
+              completed: !completed,
            }),
       })
       .then(response => {
@@ -39,13 +40,13 @@ function Todo(props){
       .catch(error => {
           console.error('Error updating TODO:', error);
       });
+      setCompleted(!completed);
   
       }
     return(
         <>
-        <p>id:{todo.id} title:{todo.title}</p>
+        <p><input type="checkbox" onChange={updateStatusTodo} checked={completed}/>  id:{todo.id} title:{todo.title}</p>
         <button onClick={deleteTodo}>Delete</button>
-        <button onClick={updateStatusTodo}>Update Status</button>
         <button onClick={()=>{setToUpdate(true)}}>Update</button>
         {toUpdate&&<UpdateTodo todo={todo} updateArr={props.updateArr}/>}
         </>

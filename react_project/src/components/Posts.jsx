@@ -34,15 +34,11 @@ function getPost(){
     setPosts(posts.filter(item => item.id !== id))
   }
 
-  function updateArr(id,title,body){
-    const index = posts.findIndex(item => item.id === id);
-    const postsArr = posts;
-    postsArr[index].title = title;
-    postsArr[index].body = body;
-    setPosts(postsArr)
-    //setPosts(posts.map((item) => {if(item.id === id){item.userId=item.userId;item.id=item.id;item.body=body;item.title=title}}));
-
-  }
+    function updateArr(id, title, body) {
+      setPosts(posts => posts.map((post) => 
+        (post.id === id ? { ...post, body: body, title: title } : post)
+      ));
+    }
 
   function filteredPosts(post){
     switch (searchCriteria) {

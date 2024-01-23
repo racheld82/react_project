@@ -25,7 +25,7 @@ function UpdateComment(props){
             }
     
             const updatedComment = await response.json();
-            props.updateArr(updatedComment.id, name,body);
+            props.updateArr(updatedComment.id, name, body);
         } catch (error) {
             console.error('Error updating TODO:', error);
         }

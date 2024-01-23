@@ -22,10 +22,11 @@ function Comments(){
     }
     useEffect(()=>{fetchArr()},[]);
 
-    function addToArr(comment){
-      setComments((prevComments) => [...prevComments, comment]);
-    }
-
+      function addToArr(id, title, body) {
+        setComments(comments => comments.map((comment) => 
+          (comment.id === id ? { ...comment, body: body, title: title } : comment)
+        ));
+      }
 
   function deleteFromArr(commentId){
     const updatedArr = comments.filter(item => item.id !== commentId);
