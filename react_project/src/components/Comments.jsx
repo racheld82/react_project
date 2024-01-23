@@ -22,19 +22,21 @@ function Comments(){
     }
     useEffect(()=>{fetchArr()},[]);
 
-      function addToArr(id, title, body) {
-        setComments(comments => comments.map((comment) => 
-          (comment.id === id ? { ...comment, body: body, title: title } : comment)
-        ));
-      }
+    function addToArr(comment){
+      setComments((prevComments) => [...prevComments, comment]);
+    }
+
 
   function deleteFromArr(commentId){
     const updatedArr = comments.filter(item => item.id !== commentId);
     setComments(updatedArr);
   };
 
-  function updateArr(id,name,body){
-    setTodosArr(todosArr.map((item) => {if(item.id === id){item.name=name;item.body=body}}))
+  function updateArr(id, title, body){
+    setComments(comments => comments.map((comment) => 
+    (comment.id === id ? { ...comment, body: body, title: title } : comment)
+  ));
+    //setTodosArr(todosArr.map((item) => {if(item.id === id){item.name=name;item.body=body}}))
   }
 
   return (

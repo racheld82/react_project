@@ -32,9 +32,11 @@ function Album () {
       
   };
 
-  function updateArr(id,title,url){
-    setPhotos(photos.map((item) => {if(item.id === id){item.title=title;item.url=url}}))
-    console.log(photos)
+
+  function updateArr(id, title, url) {
+    setPhotos(photos => photos.map((photo) => 
+      (photo.id === id ? { ...photo, title: title, url: url } : photo)
+    ));
   }
 
 
