@@ -12,6 +12,7 @@ function Album () {
   const perPage = 12;
   const [page, setPage] = useState(1);
   const [start,setStart]=useState(1)
+  const[isThereMorePhotos,setIsThereMorePhotos]=useState(true)
 
 
   function addToArr(photo){
@@ -32,6 +33,13 @@ function Album () {
       
   };
 
+  function loadMore(){
+    setPage(page+1);
+    setStart(photos[photos.length-1].id);
+    fetchPhotos();
+    setFetchTimes(fetchTimes+1);
+  }
+
 
   function updateArr(id, title, url) {
     setPhotos(photos => photos.map((photo) => 
@@ -46,6 +54,11 @@ function Album () {
        .then((data) => {
            console.log(data)
            setPhotos([...data]);
+       })
+       fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${photos[photos.length-1].id}`)
+       .then((data) => {
+           if(data==null)
+            setIsThereMorePhotos(false)
        })
  }
 
@@ -65,7 +78,7 @@ function Album () {
         </div>
         
       ))}
-       <button onClick={()=>{setPage(page+1);setStart(photos[photos.length-1].id);fetchPhotos();setFetchTimes(fetchTimes+1);}}>load more</button>
+       {isThereMorePhotos&&<button onClick={loadMore}>load more</button>}
     </div>
    
   );

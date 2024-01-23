@@ -9,12 +9,13 @@ function Comment(props)  {
 
   function deleteComment(){
     console.log(comment.id);
-      fetch(`http://localhost:3000/comments/${comment.id}`, {
+    fetch(`http://localhost:3000/comments?id=${comment.id}`, {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',
         }}).then(response => {
           response.json();
+          console.log("deleted")
         }).catch(() => {
         console.log("delete fail");
         });

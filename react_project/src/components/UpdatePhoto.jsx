@@ -25,7 +25,7 @@ function UpdatePhoto(props){
             }
     
             const updatedPhoto = await response.json();
-            props.updateArr(updatedPhoto.id, name,url);
+            props.updateArr(updatedPhoto.id, title,url);
         } catch (error) {
             console.error('Error updating TODO:', error);
         }

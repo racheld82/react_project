@@ -1,7 +1,8 @@
 import { useState,useEffect, useContext } from "react";
 import Post from "./Post";
 import {
-  useNavigate
+  useNavigate,
+  Link
 } from "react-router-dom";
 import { UserContext } from '../UserProvider';
 import "../style.css";
@@ -59,6 +60,8 @@ function getPost(){
   }
   return (
     <>
+   <Link to={`/home/user/${userID}`}>Back...</Link>
+
      <select value={searchCriteria} onChange={handleSearchChange}>
         <option value="sequential">sequential</option>
         <option value="title">title</option>

@@ -10,7 +10,6 @@ import "../style.css";
 
 
 function Details() {
-    const[id,setId]=useState(0)
     const [email, setEmail]=useState("")
     const [name, setName]=useState("")
     const [phone, setPhone]=useState(null)
@@ -26,44 +25,60 @@ function Details() {
     const navigate=useNavigate()
     const data=useLocation()
 
-    function postNewUser(){
-      let user=new User(id,name,data.state.name,email,street,suite,city,zipcode,lat,lng,phone,data.state.password,companyName,catchParse,bs);
-      fetch("http://localhost:3000/users", {
+    async function postNewUser(){
+      let id=0;
+        await fetch("http://localhost:3000/nextID", {
+            method: 'GET'
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                id = json[0].nextUserId
+            });
+      const userForSorte={
+        "id": `${id}`,
+        "name": `${name}`,
+        "username": `${data.state.name}`,
+        "email": `${email}`,
+        "street": `${street}`,
+        "suite": `${suite}`,
+        "city": `${city}`,
+        "zipcode": `${zipcode}`,
+        "lat": `${lat}`,
+        "lng": `${lng}`,
+        "phone": `${phone}`,
+        "name": `${companyName}`,
+        "catchPhrase": `${catchParse}`,
+        "bs": `${bs}`
+  
+    }
+      const user=new User(id,name,data.state.name,email,street,suite,city,zipcode,lat,lng,phone,data.state.password,companyName,catchParse,bs);
+    fetch("http://localhost:3000/users", {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',
         },
         body: JSON.stringify(user)
     }).then(response => response.json())
-    .then(localStorage.setItem("currentUser", JSON.stringify({
-      "id": `${id}`,
-      "name": `${name}`,
-      "username": `${data.state.name}`,
-      "email": `${email}`,
-    
-          "street": `${street}`,
-          "suite": `${suite}`,
-          "city": `${city}`,
-          "zipcode": `${zipcode}`,
-    
-              "lat": `${lat}`,
-              "lng": `${lng}`,
-      "phone": `${phone}`,
+    fetch("http://localhost:3000/nextID/1", {
+            method: "PATCH",
+            body: JSON.stringify({
+                "nextUserId": id + 1
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
 
+            localStorage.setItem("currentUser", JSON.stringify(userForSorte))
+           navigate(`/home/user/${id}`)
 
-          "name": `${companyName}`,
-          "catchPhrase": `${catchParse}`,
-          "bs": `${bs}`
-
-  })))
-    .then(navigate(`/home/user/${id}`))
    
     }
 
   return (
     <>
     <form onSubmit={postNewUser}>
-        <input type='number' placeholder='ID' onChange={(e) => setId(e.target.value)}/>  
         <input type='email' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
         <input type='text' placeholder='name'onChange={(e) => setName(e.target.value)}/>
         <input type='number' placeholder='phone' onChange={(e) => setPhone(e.target.value)}/>
