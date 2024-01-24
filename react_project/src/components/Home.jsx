@@ -8,18 +8,8 @@ import "../style.css";
 
 
 function Home() {
-    // const [user,setUser]=useState({});
-    const { userID, updateUserID } = useContext(UserContext);
+    const { userID } = useContext(UserContext);
     const name = JSON.parse(localStorage.getItem("currentUser")).name
-
-    // useEffect(()=>{
-    //     fetch(`http://localhost:3000/users?id=${userID}`)
-    //         .then(response => response.json())
-    //         .then(data=>setUser(data))
-    //     // updateUserID(id);
-
-    // },[])
-
 
     const navigate = useNavigate()
     function logOut() {
@@ -27,17 +17,16 @@ function Home() {
         navigate("/login");
     }
 
-
     return (
         <>
             <h1>{name}</h1>
-            <Link to={{ pathname: `/home/user/${userID}/info` }}>Info</Link>
+            <Link to={{ pathname: `/user/${userID}/info` }}>Info</Link>
             <br />
-            <Link to={{ pathname: `/home/user/${userID}/albums` }} >Albums</Link>
+            <Link to={{ pathname: `/user/${userID}/albums` }} >Albums</Link>
             <br />
-            <Link to={{ pathname: `/home/user/${userID}/posts` }}>Posts</Link>
+            <Link to={{ pathname: `/user/${userID}/posts` }}>Posts</Link>
             <br />
-            <Link to={{ pathname: `/home/user/${userID}/todos` }}>Todos</Link>
+            <Link to={{ pathname: `/user/${userID}/todos` }}>Todos</Link>
             <br />
             <button onClick={logOut}>Log Out</button>
         </>

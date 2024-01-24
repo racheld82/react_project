@@ -1,4 +1,4 @@
-import { useState,useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Post from "./Post";
 import {
   useNavigate,
@@ -9,74 +9,65 @@ import "../style.css";
 import AddNewPost from "./AddNewPost";
 
 
-function Posts(){
+function Posts() {
   const [searchTerm, setSearchTerm] = useState('');
-  const[addPost, setAddPost] = useState(false);
+  const [addPost, setAddPost] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [searchCriteria, setSearchCriteria] = useState('none'); 
+  const [searchCriteria, setSearchCriteria] = useState('none');
   const { userID } = useContext(UserContext);
 
-  const navigate=useNavigate();
-
   useEffect(() => {
-    getPost();
-}, [])
+    fetch(`http://localhost:3000/posts?userId=${userID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(data);
+      })
+  }, [])
 
-function getPost(){
-  fetch(`http://localhost:3000/posts?userId=${userID}`)
-  .then((response) => response.json())
-  .then((data) => {
-      setPosts(data);
-  })
-}
+  const handleSearchChange = (event) => {
+    setSearchCriteria(event.target.value);
 
-    const handleSearchChange = (event) => {
-        setSearchCriteria(event.target.value);
-  
-      };
-  function deletePost(id){
+  };
+  function deletePost(id) {
     setPosts(posts.filter(item => item.id !== id))
   }
-  function addToArr(post){
+  function addToArr(post) {
     setPosts((prevPosts) => [...prevPosts, post]);
     setAddPost(false)
   }
 
-    function updateArr(id, title, body) {
-      setPosts(posts => posts.map((post) => 
-        (post.id === id ? { ...post, body: body, title: title } : post)
-      ));
-   
-    }
+  function updateArr(id, title, body) {
+    setPosts(posts => posts.map((post) =>
+      (post.id === id ? { ...post, body: body, title: title } : post)
+    ));
+  }
 
-  function filteredPosts(post){
+  function searchedPosts(post) {
     switch (searchCriteria) {
-        case 'sequential':
-          return (
-            post.id.toString().includes(searchTerm)
-          );
-        case 'title':
-          return (
-           post.title.toLowerCase().startsWith(searchTerm.toLowerCase())
-          );
-        case 'none':
-          return true;
-        default:
-          return false;
-      }
+      case 'sequential':
+        return (
+          post.id.toString().includes(searchTerm)
+        );
+      case 'title':
+        return (
+          post.title.toLowerCase().startsWith(searchTerm.toLowerCase())
+        );
+      case 'none':
+        return true;
+      default:
+        return false;
+    }
 
   }
   return (
     <>
-   
-   <br />
-   {/* <button onClick={()=>navigate(`/home/user/${userID}/posts/add`)}>Add New Post</button> */}
-    <br />
-    <button onClick={()=>{setAddPost(true);}}>Add New Post</button>
-    
-   {addPost&&<AddNewPost addToArr={addToArr}/>}
-   <br/>
-     <select value={searchCriteria} onChange={handleSearchChange}>
+      <Link to={`/user/${userID}/home`}>Back...</Link>
+      <h1>POSTS</h1>
+      <br />
+      <button onClick={() => { setAddPost(true); }}>Add New Post</button>
+      {addPost && <AddNewPost addToArr={addToArr} />}
+      <br />
+      <select value={searchCriteria} onChange={handleSearchChange}>
         <option value="sequential">sequential</option>
         <option value="title">title</option>
         <option value="none">none</option>
@@ -87,13 +78,10 @@ function getPost(){
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-
-
-
-      {posts.map((post) => (filteredPosts(post)&&
-        <Post key={post.id} post={post} deletePost={deletePost} updateArr={updateArr}/>
+      {posts.map((post) => (searchedPosts(post) &&
+        <Post key={post.id} post={post} deletePost={deletePost} updateArr={updateArr} />
       ))}
-          </>
+    </>
   );
 };
 

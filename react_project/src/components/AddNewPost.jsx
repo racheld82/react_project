@@ -8,7 +8,6 @@ function AddNewPost(props) {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('')
-    const navigate = useNavigate()
     const { userID } = useContext(UserContext);
     async function addNewPost() {
         let id;
@@ -37,16 +36,14 @@ function AddNewPost(props) {
             },
         })
             .then((response) => response.json())
-            .then(navigate(`/home/user/${userID}/posts`))
     }
 
     return (
         <>
-   
-                <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)} required />
-                <input type='text' placeholder='post' onChange={(e) => setBody(e.target.value)} required />
-                <button type='submit' onClick={addNewPost}>Add</button>
-     
+            <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)} required />
+            <input type='text' placeholder='post' onChange={(e) => setBody(e.target.value)} required />
+            <button type='submit' onClick={addNewPost}>Add</button>
+
         </>
     )
 

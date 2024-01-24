@@ -137,7 +137,7 @@ function Details() {
         await fetch("http://localhost:3000/nextID")
           .then((response) => response.json())
           .then((json) => {
-            id = json[0].nextUserId;
+            setId(json[0].nextUserId);
             console.log(id);
           });
     
@@ -167,7 +167,6 @@ function Details() {
           body: JSON.stringify(user),
         });
     
-        // Update next ID
         await fetch("http://localhost:3000/nextID/1", {
           method: "PATCH",
           body: JSON.stringify({
@@ -178,12 +177,10 @@ function Details() {
           },
         });
     
-        // Set current user in localStorage
         localStorage.setItem("currentUser", JSON.stringify(userForSorte));
-    
-        // Navigate to the user's home page
-        navigate(`/home/users/${id}`);
-        console.log("home")
+ 
+        navigate(`/users/${id}/home`);
+
       } catch (error) {
         console.error("Error in postNewUser:", error);
       }

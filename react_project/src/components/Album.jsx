@@ -14,7 +14,6 @@ function Album() {
   const [start, setStart] = useState(1)
   const [isThereMorePhotos, setIsThereMorePhotos] = useState(true)
 
-
   function addToArr(photo) {
     setPhotos((prevPhotos) => [...prevPhotos, photo]);
   }
@@ -41,7 +40,6 @@ function Album() {
     setFetchTimes(fetchTimes + 1);
   }
 
-
   function updateArr(id, title, url) {
     setPhotos(photos => photos.map((photo) =>
       (photo.id === id ? { ...photo, title: title, url: url } : photo)
@@ -56,7 +54,7 @@ function Album() {
         console.log(data)
         setPhotos([...data]);
       })
-    fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${start+12}`)
+    fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${start + 12}`)
       .then((data) => {
         if (data == null)
           setIsThereMorePhotos(false)

@@ -13,9 +13,6 @@ function Post(props) {
   const navigate = useNavigate()
   const { userID } = useContext(UserContext);
 
-  const style = {
-
-  }
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
   };
@@ -37,8 +34,8 @@ function Post(props) {
 
 
   return (
-   
-      <div style={isExpanded ? { border: '1px solid #000', padding: '10px', marginBottom: '10px', backgroundColor: '#f0f0f0' } : {}}>
+
+    <div style={isExpanded ? { border: '1px solid #000', padding: '10px', marginBottom: '10px', backgroundColor: '#f0f0f0' } : {}}>
       <p>{post.id} - {post.title}</p>
       <button onClick={handleExpand}>Expand</button>
       <button onClick={deletePost}>Delete</button>
@@ -48,7 +45,7 @@ function Post(props) {
       {isExpanded && (
         <div>
           <p>{post.body}</p>
-          <button onClick={() => navigate(`/home/user/${userID}/posts/${post.id}/comments`, { state: { postId: post.id } })}>Comments</button>
+          <button onClick={() => navigate(`/user/${userID}/posts/${post.id}/comments`, { state: { postId: post.id } })}>Comments</button>
         </div>
       )}
       <p>-------------------</p>

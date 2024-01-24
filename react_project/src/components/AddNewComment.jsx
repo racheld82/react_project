@@ -19,7 +19,6 @@ function AddNewComment(props) {
             });
         const comment = new CommentClass(id, props.postId, name, email, body);
         const urlPost = `http://localhost:3000/comments`;
-        console.log("thipi");
         fetch(urlPost, {
             method: 'POST',
             headers: {
@@ -39,18 +38,15 @@ function AddNewComment(props) {
             },
         })
             .then((response) => response.json())
-        console.log(comment.id)
-
     }
 
 
     return (
         <>
-      
-                <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)} required />
-                <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)} required />
-                <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)} requiredס />
-                <button type="submit" onClick={addNewComment}>Add</button>
+            <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)} required />
+            <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)} required />
+            <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)} requiredס />
+            <button type="submit" onClick={addNewComment}>Add</button>
 
         </>
     )

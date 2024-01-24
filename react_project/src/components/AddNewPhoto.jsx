@@ -9,7 +9,7 @@ function AddNewPhoto(props) {
     const [title, setTitle] = useState('');
     const [url, setUrl] = useState('')
     const albumId = useParams();
-    console.log(albumId)
+
     async function addNewPhoto() {
         let id;
         await fetch("http://localhost:3000/nextID", {
@@ -19,8 +19,8 @@ function AddNewPhoto(props) {
             .then((json) => {
                 id = json[0].nextPhotoId
             });
-        const thumbnailUrl=url.replace("/600/", "/150/");
-        const photo = new Photo(id, props.albumId, title, url,thumbnailUrl)
+        const thumbnailUrl = url.replace("/600/", "/150/");
+        const photo = new Photo(id, props.albumId, title, url, thumbnailUrl)
         fetch("http://localhost:3000/photos", {
             method: 'POST',
             headers: {
@@ -46,11 +46,9 @@ function AddNewPhoto(props) {
 
     return (
         <>
-
-                <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)} required />
-                <input type='text' placeholder='URL' onChange={(e) => setUrl(e.target.value)} required />
-                <button type="submit" onClick={addNewPhoto}>Add</button>
-       
+            <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)} required />
+            <input type='text' placeholder='URL' onChange={(e) => setUrl(e.target.value)} required />
+            <button type="submit" onClick={addNewPhoto}>Add</button>
         </>
     )
 

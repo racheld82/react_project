@@ -8,7 +8,6 @@ function Comment(props) {
   const email = JSON.parse(localStorage.getItem("currentUser")).email
 
   function deleteComment() {
-    console.log(comment.id);
     fetch(`http://localhost:3000/comments?id=${comment.id}`, {
       method: 'DELETE',
       headers: {
@@ -16,12 +15,9 @@ function Comment(props) {
       }
     }).then(response => {
       response.json();
-      console.log("deleted")
     }).catch(() => {
       console.log("delete fail");
     });
-
-
     props.deleteFromArr(comment.id);
 
   }

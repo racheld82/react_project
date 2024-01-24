@@ -4,7 +4,7 @@ import { UserContext } from '../UserProvider';
 import "../style.css";
 
 function AddNewTodo(props) {
-
+    
     const [newTodo, setNewTodo] = useState('');
     const { userID } = useContext(UserContext);
 
@@ -19,14 +19,15 @@ function AddNewTodo(props) {
             });
 
         let todo = new Todo(userID, id, newTodo)
-        const urlPost = `http://localhost:3000/todos`;
-        fetch(urlPost, {
+        fetch(`http://localhost:3000/todos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(todo),
-        }).then(response => response.json()).then(props.addToArr(todo)).catch(() => { console.log("adding fail") })
+        }).then(response => response.json())
+        .then(props.addToArr(todo))
+        .catch(() => { console.log("adding fail") })
         fetch("http://localhost:3000/nextID/1", {
             method: "PATCH",
             body: JSON.stringify({
@@ -41,10 +42,8 @@ function AddNewTodo(props) {
 
     return (
         <>
-       
-                <input type='text' placeholder='the new todo' onChange={(e) => setNewTodo(e.target.value)} required />
-                <button type='submit' onClick={addNewTodo}>Add</button>
- 
+            <input type='text' placeholder='the new todo' onChange={(e) => setNewTodo(e.target.value)} required />
+            <button type='submit' onClick={addNewTodo}>Add</button>
         </>
     )
 

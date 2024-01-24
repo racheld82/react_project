@@ -9,31 +9,27 @@ import { Link } from "react-router-dom";
 function Todos() {
     const [todos, setTodos]=useState([])
     const [originaltodos, setOriginaltodos] = useState([]);
-    const [toAdd,setToAdd]=useState(false)
-    const [sortCriteria, setSortCriteria] = useState('none'); // קריטריון מיון
-    const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
-    const [searchInputCriteria, setSearchInputCriteria] = useState(''); // קריטריון חיפוש לפי userID
+    const [addTodo,setAddTodo]=useState(false)
+    const [sortCriteria, setSortCriteria] = useState('none'); 
+    const [searchCriteria, setSearchCriteria] = useState('none');
+    const [searchInputCriteria, setSearchInputCriteria] = useState(''); 
     const { userID } = useContext(UserContext);
     const userId = userID;
 
 
     useEffect(() => {
-      getTodo();
-  }, [])
-
-  useEffect(() => {
-    setOriginaltodos([...todos]);
-    sortTodos();
-  }, [sortCriteria]);
-  
-  function getTodo(){
-    fetch(`http://localhost:3000/todos?userId=${userId}`)
+      fetch(`http://localhost:3000/todos?userId=${userId}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data)
         setTodos(data);
     })
-  }
+    }, [])
+
+  useEffect(() => {
+    setOriginaltodos([...todos]);
+    sortTodos();
+  }, [sortCriteria]);
 
 
     function deleteFromArr(todoId){
@@ -78,8 +74,7 @@ function Todos() {
                 } else {
                   return 0; 
                 }
-              })
-            
+              })  
         ); 
         break;
         case 'alphabetical':
@@ -90,8 +85,7 @@ function Todos() {
             break;
         case 'random':
             setTodos(todos.slice().sort(() => Math.random() - 0.5)); 
-            break;
-       
+            break; 
       }
     };
 
@@ -120,8 +114,9 @@ function Todos() {
   
       return(
         <>
+      <Link to={`/user/${userID}/home`}>Back...</Link>
         <h1>TODOS</h1>
-        <Link to={`/home/user/${userID}`}>Back...</Link>
+
 
 
         <select value={sortCriteria} onChange={handleSortChange}>
@@ -152,8 +147,8 @@ function Todos() {
 
 
     </div>
-    <button onClick={()=>{setToAdd(!toAdd)}}>Add An Item To The List</button>
-      {toAdd&&<AddNewTodo addToArr={addToArr}/>}
+    <button onClick={()=>{setAddTodo(!addTodo)}}>Add Todo</button>
+      {addTodo&&<AddNewTodo addToArr={addToArr}/>}
     { todos.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
     </>
       )

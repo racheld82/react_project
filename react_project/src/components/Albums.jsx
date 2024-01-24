@@ -16,7 +16,6 @@ function Albums() {
   };
 
   useEffect(() => {
-    console.log(userID)
     fetch(`http://localhost:3000/albums?userId=${userID}`)
       .then((response) => response.json())
       .then((data) => {
@@ -32,7 +31,6 @@ function Albums() {
       case 'title':
         return (
           album.title.toLowerCase().startsWith(searchTerm.toLowerCase())
-
         );
       case 'id':
         return (
@@ -46,20 +44,18 @@ function Albums() {
 
   };
 
-
-
   function addAlbum(album) {
     setAlbums((prevAlbums) => [...prevAlbums, album]);
   };
 
   return (
     <>
-      <Link to={`/home/user/${userID}`}>Back...</Link>
+      <Link to={`/user/${userID}/home`}>Back...</Link>
       <br />
       <h1>Albums</h1>
-      <br/>
+      <br />
       <AddNewAlbum addAlbum={addAlbum} />
-      <br/>
+      <br />
       <select value={filter} onChange={(e) => handleFilterChange(e.target.value)}>
         <option value="all">All Albums</option>
         <option value="title">Title</option>
@@ -71,7 +67,7 @@ function Albums() {
       {
         albums.map((album) => (
           searchAlbum(album) && (
-            <Link to={{ pathname: `/home/user/${userID}/albums/${album.id}` }}>{album.id} - {album.title} <br /></Link>
+            <Link to={{ pathname: `/user/${userID}/albums/${album.id}` }}>{album.id} - {album.title} <br /></Link>
           )
         ))}
     </>

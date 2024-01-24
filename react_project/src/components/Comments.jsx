@@ -13,19 +13,16 @@ function Comments() {
   const data = useLocation();
   const postId = data.state.postId;
 
-
-  function fetchArr() {
-    console.log(data.state.postId);
+  useEffect(() => {
     fetch(`http://localhost:3000/comments?postId=${postId}`)
-      .then(response => response.json())
-      .then(data => { setComments(data); console.log(data) })
-  }
-  useEffect(() => { fetchArr() }, []);
+    .then(response => response.json())
+    .then(data => { setComments(data) })
+  },
+    []);
 
   function addToArr(comment) {
     setComments((prevComments) => [...prevComments, comment]);
   }
-
 
   function deleteFromArr(commentId) {
     const updatedArr = comments.filter(item => item.id !== commentId);
@@ -36,7 +33,6 @@ function Comments() {
     setComments(comments => comments.map((comment) =>
       (comment.id === id ? { ...comment, body: body, title: title } : comment)
     ));
-    //setTodosArr(todosArr.map((item) => {if(item.id === id){item.name=name;item.body=body}}))
   }
 
   return (
