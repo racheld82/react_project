@@ -195,7 +195,7 @@ function Details() {
 
   return (
     <>
-    <form onSubmit={postNewUser}>
+
         <input type='email' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
         <input type='text' placeholder='name'onChange={(e) => setName(e.target.value)}/>
         <input type='number' placeholder='phone' onChange={(e) => setPhone(e.target.value)}/>
@@ -211,9 +211,9 @@ function Details() {
         <input type='text' placeholder='name' onChange={(e) => setCompanyName(e.target.value)}/> 
         <input type='text' placeholder='catchParse' onChange={(e) => setCatchParse(e.target.value)}/>
         <input type='text' placeholder='bs' onChange={(e) => setBs(e.target.value)}/>
+        {/* <input type='submit' >submit</input> */}
+        <button onClick={postNewUser}>Submit</button>
 
-        <button>Submit</button>
-    </form>
     </>
   )
 }
