@@ -4,8 +4,8 @@ import "../style.css";
 
 function AddNewComment(props) {
     const [name, setName] = useState('');
-    const [email, setEmail] = useState("")
     const [body, setBody] = useState('')
+    const email=JSON.parse(localStorage.getItem("currentUser")).email
 
     async function addNewComment() {
 
@@ -44,8 +44,7 @@ function AddNewComment(props) {
     return (
         <>
             <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)} required />
-            <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)} required />
-            <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)} requiredס />
+            <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)} required/>
             <button type="submit" onClick={addNewComment}>Add</button>
 
         </>

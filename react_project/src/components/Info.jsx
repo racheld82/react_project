@@ -23,8 +23,8 @@ function Info() {
         <p> email: {user.email}</p>
         <p> phone: {user.phone}</p>
         <p>adress:</p>
-        <p> street: {user.street}  suite:{user.suite} zipcode:{user.zipcode}</p>
-        <p> geo:  lat:{user.lat}  lng:{user.lng}</p>
+        <p> street: {user.street} <br/> suite:{user.suite} <br/> zipcode:{user.zipcode}</p>
+        <p> geo:<br/>  lat:{user.lat}  lng:{user.lng}</p>
         <p>company:</p>
         <p> name: {user.Cname}</p><p> catch phrase:{user.catchPhrase} </p><p>bs:{user.bs}</p>
         <button onClick={hideInfo}>Hide info</button>

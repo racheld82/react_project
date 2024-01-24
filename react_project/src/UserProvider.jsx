@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   
-  const storedUser = JSON.parse(localStorage.getItem('currentUser'))?JSON.parse(localStorage.getItem('currentUser')).id:0;
+  const storedUser = JSON.parse(localStorage.getItem('currentUser'))?JSON.parse(localStorage.getItem('currentUser')).id:1;
 
   const initialUser = {
     userID: 0,
@@ -23,34 +23,3 @@ const UserProvider = ({ children }) => {
 };
 
 export default UserProvider;
-
-// import React, { createContext, useState, useEffect } from 'react';
-
-// export const UserContext = createContext();
-
-// const UserProvider = ({ children }) => {
-//   const storedUser = localStorage.getItem('activeUser');
-//   const initialUser = storedUser ? JSON.parse(storedUser) : { username: '' };
-
-//   const [user, setUser] = useState(initialUser);
-
-//   useEffect(() => {
-//     localStorage.setItem('activeUser', JSON.stringify(user));
-//   }, [user]);
-
-//   const updateUser = (name, value) => {
-//     setUser({ ...user, [name]: value });
-//   };
-
-//   const setCurrentUser = (newUser) => {
-//     setUser(newUser);
-//   };
-
-//   return (
-//     <UserContext.Provider value={{ userID, updateUser, setCurrentUser }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// };
-
-// export default UserProvider;
