@@ -29,9 +29,9 @@ function Comments() {
     setComments(updatedArr);
   };
 
-  function updateArr(id, title, body) {
+  function updateArr(id, name, body) {
     setComments(comments => comments.map((comment) =>
-      (comment.id === id ? { ...comment, body: body, title: title } : comment)
+      (comment.id === id ? { ...comment, body: body, name: name } : comment)
     ));
   }
 

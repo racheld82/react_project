@@ -15,8 +15,6 @@ function Info() {
     const[company,setCompany]=useState({})
     const { userID } = useContext(UserContext);
 
-
-
     useEffect(() => {
       fetch(`http://localhost:3000/users?userId=${userID}`)
           .then(response => response.json())

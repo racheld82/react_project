@@ -13,6 +13,7 @@ function Album() {
   const [page, setPage] = useState(1);
   const [start, setStart] = useState(1)
   const [isThereMorePhotos, setIsThereMorePhotos] = useState(true)
+  const [end,setEnd]=useState(start+12)
 
   function addToArr(photo) {
     setPhotos((prevPhotos) => [...prevPhotos, photo]);
@@ -35,7 +36,8 @@ function Album() {
 
   function loadMore() {
     setPage(page + 1);
-    setStart(photos[photos.length - 1].id);
+    setStart(start+12);
+    setEnd(end+12)
     fetchPhotos();
     setFetchTimes(fetchTimes + 1);
   }
@@ -46,19 +48,26 @@ function Album() {
     ));
   }
 
-
   function fetchPhotos() {
     fetch(`http://localhost:3000/photos?albumId=${albumId}&_page=${page}&_limit=${perPage}&_start=${start}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        setPhotos([...data]);
+        console.log(data);
+        setPhotos((prevPhotos) => [...prevPhotos, ...data]);
       })
+      .catch((error) => {
+        console.error('Error fetching photos:', error);
+      });
+
     fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${start + 12}`)
+      .then((response) => response.json()) 
       .then((data) => {
-        if (data == null)
-          setIsThereMorePhotos(false)
+        if (data === null || data.length === 0) {
+          setIsThereMorePhotos(false);
+          console.log("done");
+        }
       })
+      .catch(() => setIsThereMorePhotos(false));
   }
 
   useEffect(() => fetchPhotos(), []);
@@ -77,7 +86,7 @@ function Album() {
         </div>
 
       ))}
-      {isThereMorePhotos && <button onClick={loadMore}>load more</button>}
+      <button onClick={loadMore} disabled={!isThereMorePhotos}>load more</button>
     </div>
 
   );

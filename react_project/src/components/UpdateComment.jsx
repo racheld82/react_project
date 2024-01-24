@@ -20,16 +20,17 @@ function UpdateComment(props) {
                     body: body
                 }),
             });
+            props.updateArr(comment.id, name, body);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const updatedComment = await response.json();
-            props.updateArr(updatedComment.id, name, body);
         } catch (error) {
             console.error('Error updating TODO:', error);
         }
+
     }
     return (<>
         <input type='text' value={name} onChange={(e) => setName(e.target.value)} required />
