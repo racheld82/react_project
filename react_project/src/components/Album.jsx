@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import AddNewPhoto from './AddNewPhoto';
 import UpdatePhoto from './UpdatePhoto';
 import "../style.css";
@@ -20,6 +20,7 @@ function Album() {
   }
 
   function handleDeleteClick(photoId) {
+   try{
     fetch(`http://localhost:3000/photos/${photoId}`, {
       method: 'DELETE',
       headers: {
@@ -27,47 +28,46 @@ function Album() {
       }
     }).then(response => {
       response.json();
-    }).catch(() => {
-      console.log("delete fail");
-    });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    })
     setPhotos(photos.filter(item => item.id !== photoId))
+   }
+   catch(error){
+    console.log(error)
+   }
 
   };
 
   function loadMore() {
     setPage(page + 1);
-    setStart(start+12);
-    setEnd(end+12)
     fetchPhotos();
     setFetchTimes(fetchTimes + 1);
   }
 
-  function updateArr(id, title, url) {
+  function updateArr(id, title, url,thumbnailUrl) {
     setPhotos(photos => photos.map((photo) =>
-      (photo.id === id ? { ...photo, title: title, url: url } : photo)
+      (photo.id === id ? { ...photo, title: title, url: url,thumbnailUrl:thumbnailUrl } : photo)
     ));
   }
 
   function fetchPhotos() {
+    console.log(start)
     fetch(`http://localhost:3000/photos?albumId=${albumId}&_page=${page}&_limit=${perPage}&_start=${start}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setPhotos((prevPhotos) => [...prevPhotos, ...data]);
+        setStart(start+12);
+        if(data.length<12){
+          setIsThereMorePhotos(false)
+        }
       })
       .catch((error) => {
         console.error('Error fetching photos:', error);
       });
 
-    fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${start + 12}`)
-      .then((response) => response.json()) 
-      .then((data) => {
-        if (data === null || data.length === 0) {
-          setIsThereMorePhotos(false);
-          console.log("done");
-        }
-      })
-      .catch(() => setIsThereMorePhotos(false));
   }
 
   useEffect(() => fetchPhotos(), []);
@@ -86,7 +86,7 @@ function Album() {
         </div>
 
       ))}
-      <button onClick={loadMore} disabled={!isThereMorePhotos}>load more</button>
+      {isThereMorePhotos&&<button onClick={loadMore}>load more</button>}
     </div>
 
   );

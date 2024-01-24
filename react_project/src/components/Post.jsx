@@ -19,17 +19,24 @@ function Post(props) {
 
 
   function deletePost() {
-    fetch(`http://localhost:3000/posts/${post.id}`, {
+    try{
+      fetch(`http://localhost:3000/posts/${post.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       }
     }).then(response => {
       response.json();
-    }).catch(() => {
-      console.log("delete fail");
-    });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    })
     props.deletePost(post.id);
+    }
+    catch(error){
+      console.log(error)
+    }
   }
 
 

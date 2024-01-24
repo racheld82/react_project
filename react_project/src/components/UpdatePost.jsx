@@ -26,7 +26,7 @@ function UpdatePost(props) {
             const updatedPost = await response.json();
             props.updateArr(updatedPost.id, title, body);
         } catch (error) {
-            console.error('Error updating TODO:', error);
+            console.error('Error updating Post:', error);
         }
     }
     return (<>

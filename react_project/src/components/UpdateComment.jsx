@@ -28,7 +28,7 @@ function UpdateComment(props) {
 
             const updatedComment = await response.json();
         } catch (error) {
-            console.error('Error updating TODO:', error);
+            console.error('Error updating Comment:', error);
         }
 
     }

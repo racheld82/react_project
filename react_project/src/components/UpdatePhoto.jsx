@@ -10,6 +10,7 @@ function UpdatePhoto(props) {
     
     async function updatePhoto() {
         try {
+            const thumbnailUrl=url.replace("/600/", "/150/")
             const response = await fetch(`http://localhost:3000/photos/${photo.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -17,7 +18,8 @@ function UpdatePhoto(props) {
                 },
                 body: JSON.stringify({
                     title: title,
-                    url: url
+                    url: url,
+                    thumbnailUrl:thumbnailUrl
                 }),
             });
 
@@ -26,9 +28,9 @@ function UpdatePhoto(props) {
             }
 
             const updatedPhoto = await response.json();
-            props.updateArr(updatedPhoto.id, title, url);
+            props.updateArr(updatedPhoto.id, title, url,thumbnailUrl);
         } catch (error) {
-            console.error('Error updating TODO:', error);
+            console.error('Error updating Photo:', error);
         }
     }
     return (<>

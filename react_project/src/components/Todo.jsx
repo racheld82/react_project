@@ -8,17 +8,23 @@ function Todo(props) {
     const [completed, setCompleted] = useState(todo.completed);
 
     function deleteTodo() {
-        fetch(`http://localhost:3000/todos/${todo.id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then(response => {
-            response.json();
-        }).catch(() => {
-            console.log("delete fail");
-        });
-        props.deleteFromArr(todo.id);
+        try {
+            fetch(`http://localhost:3000/todos/${todo.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(response => {
+                response.json();
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            props.deleteFromArr(todo.id);
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
     function updateStatusTodo() {

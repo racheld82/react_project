@@ -67,7 +67,7 @@ function Albums() {
       {
         albums.map((album) => (
           searchAlbum(album) && (
-            <Link to={{ pathname: `/user/${userID}/albums/${album.id}` }}>{album.id} - {album.title} <br /></Link>
+            <Link key={album.key} to={{ pathname: `/user/${userID}/albums/${album.id}` }}>{album.id} - {album.title} <br /></Link>
           )
         ))}
     </>

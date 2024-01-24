@@ -8,6 +8,7 @@ function Comment(props) {
   const email = JSON.parse(localStorage.getItem("currentUser")).email
 
   function deleteComment() {
+   try{
     fetch(`http://localhost:3000/comments?id=${comment.id}`, {
       method: 'DELETE',
       headers: {
@@ -15,10 +16,15 @@ function Comment(props) {
       }
     }).then(response => {
       response.json();
-    }).catch(() => {
-      console.log("delete fail");
-    });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    })
     props.deleteFromArr(comment.id);
+   }
+   catch(error){
+    console.log(error)
+   }
 
   }
 
