@@ -47,7 +47,7 @@ function Todo(props){
         <>
         <p><input type="checkbox" onChange={updateStatusTodo} checked={completed}/>  id:{todo.id} title:{todo.title}</p>
         <button onClick={deleteTodo}>Delete</button>
-        <button onClick={()=>{setToUpdate(true)}}>Update</button>
+        <button onClick={()=>{setToUpdate(!toUpdate)}}>Update</button>
         {toUpdate&&<UpdateTodo todo={todo} updateArr={props.updateArr}/>}
         <p>------------------------------</p>
         </>

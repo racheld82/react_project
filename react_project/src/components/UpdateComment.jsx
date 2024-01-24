@@ -31,11 +31,11 @@ function UpdateComment(props){
         }
     }
     return( <>
-    <form onSubmit={updateComment}>
+  
         <input type='text' value={name} onChange={(e) => setName(e.target.value)} required/>
         <input type='text' value={body} onChange={(e) => setBody(e.target.value)} required/>
-        <button type="submit">Update</button>
-        </form>
+        <button type="submit" onClick={updateComment}>Update</button>
+ 
         </>)
 }
 

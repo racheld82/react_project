@@ -37,11 +37,12 @@ function Post(props) {
 
 
   return (
-    <div>
+   
+      <div style={isExpanded ? { border: '1px solid #000', padding: '10px', marginBottom: '10px', backgroundColor: '#f0f0f0' } : {}}>
       <p>{post.id} - {post.title}</p>
       <button onClick={handleExpand}>Expand</button>
       <button onClick={deletePost}>Delete</button>
-      <button onClick={() => { setToUpdate(true) }}>Update</button>
+      <button onClick={() => { setToUpdate(!toUpdate) }}>Update</button>
       <div>{toUpdate && <UpdatePost post={post} updateArr={props.updateArr} />}</div>
 
       {isExpanded && (

@@ -7,24 +7,24 @@ import "../style.css";
 
 function Info() {
     const navigate=useNavigate()
-    // const [user,setUser]=useState({});
+    const [user,setUser]=useState({});
     //const name=JSON.parse(localStorage.getItem("currentUser")).name
-    // const userId = useIdContext();
-    const user=JSON.parse(localStorage.getItem("currentUser"))
+    const userId = useIdContext();
+    // const user=JSON.parse(localStorage.getItem("currentUser"))
 
-//     useEffect(() => {
-//         console.log(userId);
-//       fetch(`http://localhost:3000/users?userId=${userId}`)
-//           .then(response => response.json())
-//           .then(data => {
-//               if (data.length > 0) {
-//                   setUser(data[0]);
-//               }
-//           })
-//           .catch(error => {
-//               console.error('Error fetching user data:', error);
-//           });
-//   }, []);
+    useEffect(() => {
+        console.log(userId);
+      fetch(`http://localhost:3000/users?userId=${userId}`)
+          .then(response => response.json())
+          .then(data => {
+              if (data.length > 0) {
+                  setUser(data[0]);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching user data:', error);
+          });
+  }, []);
 
     
         
@@ -39,10 +39,10 @@ function Info() {
         <p> email: {user.email}</p>
         <p> phone: {user.phone}</p>
         <p>adress:</p>
-        <p> street: {user.street}  suite:{user.suite} zipcode:{user.zipcode}</p>
-        <p> geo:  lat:{user.lat}  lng:{user.lng}</p>
+        <p> street: {user.address.street}  suite:{user.address.suite} zipcode:{user.address.zipcode}</p>
+        <p> geo:  lat:{user.address.geo.lat}  lng:{user.address.geo.lng}</p>
         <p>company:</p>
-        <p> name: {user.Cname}</p><p> catch parse:{user.catchPharse} </p><p>bs:{user.bs}</p>
+        <p> name: {user.company.name}</p><p> catch parse:{user.company.catchPharse} </p><p>bs:{user.company.bs}</p>
         <button onClick={hideInfo}>Hide info</button>
         
     </>

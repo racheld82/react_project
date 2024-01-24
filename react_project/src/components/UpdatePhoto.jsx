@@ -31,11 +31,11 @@ function UpdatePhoto(props){
         }
     }
     return( <>
-    <form onSubmit={updatePhoto}>
+
         <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} required/>
         <input type='text' value={url} onChange={(e) => setUrl(e.target.value)} required/>
-        <button type="submit">Confirm</button>
-        </form>
+        <button type="submit" onClick={updatePhoto}>Confirm</button>
+  
         </>)
 }
 

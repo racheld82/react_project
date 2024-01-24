@@ -5,23 +5,15 @@ import {
 } from "react-router-dom";
 import "../style.css";
 
-
-
-
-
-
  function Login() {
     const [name, setName] = useState(null);
     const [password, setPassword] = useState(null);
     const [userId, setUserId] = useState(null);
-
-
-    
     const navigate=useNavigate()
 
     useEffect(() => {
       if (userId) {
-        navigate(`/home/user/${userId}`);
+        navigate(`/user/${userId}/home`);
       }
     }, [userId, navigate]);
 
@@ -69,7 +61,6 @@ import "../style.css";
       <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)}/>
       <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
       <button onClick={isValidUser}>Login</button>
-
       <Link to="/register">New User?</Link>
     </>
   )

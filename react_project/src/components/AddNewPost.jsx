@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserProvider';
 import "../style.css";
 
-function AddNewPost() {
+function AddNewPost(props) {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('')
@@ -26,7 +26,7 @@ function AddNewPost() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(post)
-        }).then(response => response.json()).catch(() => { console.log("adding fail") })
+        }).then(response => response.json()).then(props.addToArr(post)).catch(() => { console.log("adding fail") })
         fetch("http://localhost:3000/nextID/1", {
             method: "PATCH",
             body: JSON.stringify({
@@ -42,11 +42,11 @@ function AddNewPost() {
 
     return (
         <>
-            <form onSubmit={addNewPost}>
+   
                 <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)} required />
                 <input type='text' placeholder='post' onChange={(e) => setBody(e.target.value)} required />
-                <button type='submit'>Add</button>
-            </form>
+                <button type='submit' onClick={addNewPost}>Add</button>
+     
         </>
     )
 

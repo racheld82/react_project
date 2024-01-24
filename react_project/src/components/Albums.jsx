@@ -57,7 +57,9 @@ function Albums() {
       <Link to={`/home/user/${userID}`}>Back...</Link>
       <br />
       <h1>Albums</h1>
+      <br/>
       <AddNewAlbum addAlbum={addAlbum} />
+      <br/>
       <select value={filter} onChange={(e) => handleFilterChange(e.target.value)}>
         <option value="all">All Albums</option>
         <option value="title">Title</option>

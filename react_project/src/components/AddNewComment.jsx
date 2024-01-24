@@ -46,12 +46,12 @@ function AddNewComment(props) {
 
     return (
         <>
-            <form action={addNewComment}>
+      
                 <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)} required />
                 <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)} required />
                 <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)} requiredס />
-                <button type="submit">Add</button>
-            </form>
+                <button type="submit" onClick={addNewComment}>Add</button>
+
         </>
     )
 

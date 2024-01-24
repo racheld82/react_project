@@ -6,9 +6,12 @@ import {
 } from "react-router-dom";
 import { UserContext } from '../UserProvider';
 import "../style.css";
+import AddNewPost from "./AddNewPost";
+
 
 function Posts(){
   const [searchTerm, setSearchTerm] = useState('');
+  const[addPost, setAddPost] = useState(false);
   const [posts, setPosts] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('none'); 
   const { userID } = useContext(UserContext);
@@ -34,11 +37,16 @@ function getPost(){
   function deletePost(id){
     setPosts(posts.filter(item => item.id !== id))
   }
+  function addToArr(post){
+    setPosts((prevPosts) => [...prevPosts, post]);
+    setAddPost(false)
+  }
 
     function updateArr(id, title, body) {
       setPosts(posts => posts.map((post) => 
         (post.id === id ? { ...post, body: body, title: title } : post)
       ));
+   
     }
 
   function filteredPosts(post){
@@ -60,10 +68,14 @@ function getPost(){
   }
   return (
     <>
-   <Link to={`/home/user/${userID}`}>Back...</Link>
+   
    <br />
-   <button onClick={()=>navigate(`/home/user/${userID}/posts/add`)}>Add New Post</button>
-<br />
+   {/* <button onClick={()=>navigate(`/home/user/${userID}/posts/add`)}>Add New Post</button> */}
+    <br />
+    <button onClick={()=>{setAddPost(true);}}>Add New Post</button>
+    
+   {addPost&&<AddNewPost addToArr={addToArr}/>}
+   <br/>
      <select value={searchCriteria} onChange={handleSearchChange}>
         <option value="sequential">sequential</option>
         <option value="title">title</option>

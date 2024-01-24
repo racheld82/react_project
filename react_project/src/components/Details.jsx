@@ -114,6 +114,7 @@ import "../style.css";
 
 
 function Details() {
+    const[id,setId]=useState(0)
     const [email, setEmail]=useState("")
     const [name, setName]=useState("")
     const [phone, setPhone]=useState(null)
@@ -132,9 +133,7 @@ function Details() {
     async function postNewUser() {
 
       try {
-        let id;
-    
-        // Fetch next ID
+   
         await fetch("http://localhost:3000/nextID")
           .then((response) => response.json())
           .then((json) => {
@@ -159,10 +158,7 @@ function Details() {
         "bs": `${bs}`
         };
     
-        // Create user object
         const user = new User(id, name, data.state.name, email, street, suite, city, zipcode, lat, lng, phone, data.state.password, companyName, catchParse, bs);
-    
-        // POST user data
         await fetch("http://localhost:3000/users", {
           method: 'POST',
           headers: {
@@ -211,7 +207,6 @@ function Details() {
         <input type='text' placeholder='name' onChange={(e) => setCompanyName(e.target.value)}/> 
         <input type='text' placeholder='catchParse' onChange={(e) => setCatchParse(e.target.value)}/>
         <input type='text' placeholder='bs' onChange={(e) => setBs(e.target.value)}/>
-        {/* <input type='submit' >submit</input> */}
         <button onClick={postNewUser}>Submit</button>
 
     </>

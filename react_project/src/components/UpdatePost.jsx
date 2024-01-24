@@ -30,11 +30,11 @@ function UpdatePost(props){
         }
     }
     return( <>
-    <form onSubmit={updatePost}>
+
         <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} required/>
         <input type='text' value={body} onChange={(e) => setBody(e.target.value)} required/>
-        <button type="submit">Update</button>
-        </form>
+        <button type="submit" onClick={updatePost}>Update</button>
+  
         </>)
 }
 

@@ -100,7 +100,7 @@ function Todos() {
             switch (searchCriteria) {
               case 'sequential':
                 return (
-                  todo.userID.toString().includes(searchInputCriteria)
+                  todo.id.toString().includes(searchInputCriteria)
                 );
               case 'execution':
                 return (
@@ -152,7 +152,7 @@ function Todos() {
 
 
     </div>
-    <button onClick={()=>{setToAdd(true)}}>Add An Item To The List</button>
+    <button onClick={()=>{setToAdd(!toAdd)}}>Add An Item To The List</button>
       {toAdd&&<AddNewTodo addToArr={addToArr}/>}
     { todos.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
     </>

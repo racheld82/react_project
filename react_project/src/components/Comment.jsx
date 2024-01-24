@@ -31,7 +31,7 @@ function Comment(props) {
       {comment.name}: {comment.body}
       {email === comment.email && (
         <>
-          <button onClick={() => { setToUpdate(true) }}>update</button>
+          <button onClick={() => { setToUpdate(!toUpdate) }}>update</button>
           <button onClick={() => deleteComment(comment.id)}>delete</button>
           {toUpdate && <UpdateComment updateArr={props.updateArr} comment={comment} />}
         </>

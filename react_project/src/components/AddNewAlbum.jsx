@@ -40,10 +40,10 @@ function AddNewAlbum(props) {
 
     return (
         <>
-            <form onSubmit={addNewPost}>
+    
                 <input type='text' placeholder='title' onChange={(e) => setTitle(e.target.value)} required />
-                <button type='submit'>Add</button>
-            </form>
+                <button type='submit' onClick={addNewPost}>Add</button>
+        
         </>
     )
 

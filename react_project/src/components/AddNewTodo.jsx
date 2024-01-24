@@ -41,10 +41,10 @@ function AddNewTodo(props) {
 
     return (
         <>
-            <form onSubmit={addNewTodo}>
+       
                 <input type='text' placeholder='the new todo' onChange={(e) => setNewTodo(e.target.value)} required />
-                <button type='submit'>Add</button>
-            </form>
+                <button type='submit' onClick={addNewTodo}>Add</button>
+ 
         </>
     )
 

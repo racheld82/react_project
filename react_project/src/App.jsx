@@ -11,10 +11,6 @@ import Posts from './components/Posts'
 import Albums from './components/Albums'
 import Album from './components/Album'
 import Comments from './components/Comments';
-import AddNewPost from './components/AddNewPost';
-import UpdatePost from './components/UpdatePost';
-import AddNewTodo from './components/AddNewTodo';
-import UpdateTodo from './components/UpdateTodo'
 import NotFound from './components/NotFound';
 
 
@@ -27,19 +23,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/home/user/:userId" element={<Home />}/>
-          {/* <Route index element={<Navigate to={`/home/user/${id}/info`} />} /> */}
-          <Route path="/home/user/:userId/info" element={<Info />} />
-          <Route path="/home/user/:userId/todos" element={<Todos />} />
-          <Route path="/home/user/:userId/todos/add" element={<AddNewTodo />} />
-          <Route path="/home/user/:userId/todos/:updateId/update" element={<UpdateTodo />} />
-          <Route path="/home/user/:userId/posts" element={<Posts />} />
-          <Route path="/home/user/:userId/posts/:commentId/comments" element={<Comments />} />
-          <Route path="/home/user/:userId/posts/add" element={<AddNewPost />} />
-          {/* <Route path="/home/user/:id/posts/:id/update" element={<UpdatePost />} /> */}
-
-
-          <Route path="/home/user/:userId/albums" element={<Albums />} />
+          <Route path="/user/:userId/home" element={<Home />}/>
+          <Route path="/user/:userId/info" element={<Info />} />
+          <Route path="/user/:userId/todos" element={<Todos />} />
+          <Route path="/user/:userId/posts" element={<Posts />} />
+          <Route path="/user/:userId/posts/:commentId/comments" element={<Comments />} />
+          <Route path="/user/:userId/albums" element={<Albums />} />
           <Route path="/home/user/:userId/albums/:albumId" element={<Album/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />}/>

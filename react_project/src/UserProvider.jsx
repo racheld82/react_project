@@ -3,15 +3,13 @@ import React, { createContext, useState } from 'react';
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const[id,setId] =useState(1);
-  const storedUser = JSON.parse(localStorage.getItem('currentUser'));
-  if(storedUser){
-    setId(storedUser.id)
-  }
+
+  const storedUser = JSON.parse(localStorage.getItem('currentUser')).id||0;
+
   const initialUser = {
     userID: 0,
   };
-  const [userID, setUserID] = useState(id);
+  const [userID, setUserID] = useState(storedUser);
 
    const updateUserID = (id) => {
     setUserID(id);

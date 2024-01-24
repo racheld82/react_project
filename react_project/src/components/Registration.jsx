@@ -22,9 +22,7 @@ function Register() {
              }
               else{
                 alert("User name is invalid");}
-            })
-        
-            
+            })   
         }
        else{
         alert("Invalid password");

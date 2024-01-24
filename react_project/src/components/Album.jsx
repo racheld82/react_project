@@ -56,7 +56,7 @@ function Album() {
         console.log(data)
         setPhotos([...data]);
       })
-    fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${photos[photos.length - 1].id}`)
+    fetch(`http://localhost:3000/photos?albumId=${albumId}&_start=${start+12}`)
       .then((data) => {
         if (data == null)
           setIsThereMorePhotos(false)
