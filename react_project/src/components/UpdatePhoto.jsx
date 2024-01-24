@@ -31,9 +31,11 @@ function UpdatePhoto(props){
         }
     }
     return( <>
-        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)}/>
-        <input type='text' value={url} onChange={(e) => setUrl(e.target.value)}/>
-        <button onClick={updatePhoto}>Confirm</button>
+    <form onSubmit={updatePhoto}>
+        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} required/>
+        <input type='text' value={url} onChange={(e) => setUrl(e.target.value)} required/>
+        <button type="submit">Confirm</button>
+        </form>
         </>)
 }
 

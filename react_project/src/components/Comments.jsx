@@ -8,39 +8,40 @@ import "../style.css";
 
 
 
-function Comments(){
+function Comments() {
   const [comments, setComments] = useState([]);
-  const data=useLocation();
+  const data = useLocation();
   const postId = data.state.postId;
 
 
-  function fetchArr(){
+  function fetchArr() {
     console.log(data.state.postId);
     fetch(`http://localhost:3000/comments?postId=${postId}`)
       .then(response => response.json())
-      .then(data=>{setComments(data); console.log(data)})
-    }
-    useEffect(()=>{fetchArr()},[]);
+      .then(data => { setComments(data); console.log(data) })
+  }
+  useEffect(() => { fetchArr() }, []);
 
-    function addToArr(comment){
-      setComments((prevComments) => [...prevComments, comment]);
-    }
+  function addToArr(comment) {
+    setComments((prevComments) => [...prevComments, comment]);
+  }
 
 
-  function deleteFromArr(commentId){
+  function deleteFromArr(commentId) {
     const updatedArr = comments.filter(item => item.id !== commentId);
     setComments(updatedArr);
   };
 
-  function updateArr(id, title, body){
-    setComments(comments => comments.map((comment) => 
-    (comment.id === id ? { ...comment, body: body, title: title } : comment)
-  ));
+  function updateArr(id, title, body) {
+    setComments(comments => comments.map((comment) =>
+      (comment.id === id ? { ...comment, body: body, title: title } : comment)
+    ));
     //setTodosArr(todosArr.map((item) => {if(item.id === id){item.name=name;item.body=body}}))
   }
 
   return (
     <div>
+      <AddNewComment postId={postId} addToArr={addToArr} />
       <ul>
         {comments.map(comment => (
           <Comment
@@ -51,11 +52,6 @@ function Comments(){
           />
         ))}
       </ul>
-      {/* <input type='text' placeholder='name' onChange={(e) => setName(e.target.value)}/>
-      <input type='text' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
-      <input type='text' placeholder='comment' onChange={(e) => setBody(e.target.value)}/>
-      <button onClick={()=>{addNewComment}}>Add</button> */}
-      <AddNewComment postId={postId} addToArr={addToArr}/>
     </div>
   );
 };

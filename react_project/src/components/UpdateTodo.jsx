@@ -28,9 +28,12 @@ function UpdateTodo(props){
     }
  
     return( <>
-        <input type='text' placeholder='update todo' value={title} onChange={(e) => setTitle(e.target.value)}/>
-        <button onClick={updateTodo}>Update</button>
-        </>)
+    <form onSubmit={updateTodo}>
+        <input type='text' placeholder='update todo' value={title} onChange={(e) => setTitle(e.target.value)} required/>
+        <button type="submit">Update</button>
+        </form>
+        </>
+        )
 }
 
 export default UpdateTodo

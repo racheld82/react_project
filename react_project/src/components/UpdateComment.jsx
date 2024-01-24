@@ -31,9 +31,11 @@ function UpdateComment(props){
         }
     }
     return( <>
-        <input type='text' value={name} onChange={(e) => setName(e.target.value)}/>
-        <input type='text' value={body} onChange={(e) => setBody(e.target.value)}/>
-        <button onClick={updateComment}>Update</button>
+    <form onSubmit={updateComment}>
+        <input type='text' value={name} onChange={(e) => setName(e.target.value)} required/>
+        <input type='text' value={body} onChange={(e) => setBody(e.target.value)} required/>
+        <button type="submit">Update</button>
+        </form>
         </>)
 }
 

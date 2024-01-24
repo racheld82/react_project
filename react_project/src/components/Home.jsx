@@ -10,7 +10,7 @@ import "../style.css";
 function Home() {
     // const [user,setUser]=useState({});
     const { userID, updateUserID } = useContext(UserContext);
-    const name=JSON.parse(localStorage.getItem("currentUser")).name
+    const name = JSON.parse(localStorage.getItem("currentUser")).name
 
     // useEffect(()=>{
     //     fetch(`http://localhost:3000/users?id=${userID}`)
@@ -21,23 +21,27 @@ function Home() {
     // },[])
 
 
-    const navigate=useNavigate()
-    function logOut(){
+    const navigate = useNavigate()
+    function logOut() {
         localStorage.removeItem("currentUser");
         navigate("/login");
     }
 
 
-    return(
+    return (
         <>
-        <h1>{name}</h1>
-        <Link to={{ pathname: `/home/user/${userID}/info` }}>Info</Link>
-        <Link to={{ pathname: `/home/user/${userID}/albums` }} >Albums</Link>
-        <Link to={{ pathname: `/home/user/${userID}/posts`}}>Posts</Link>
-        <Link to={{ pathname: `/home/user/${userID}/todos`}}>Todos</Link> 
-        <button onClick={logOut}>Log Out</button>
+            <h1>{name}</h1>
+            <Link to={{ pathname: `/home/user/${userID}/info` }}>Info</Link>
+            <br />
+            <Link to={{ pathname: `/home/user/${userID}/albums` }} >Albums</Link>
+            <br />
+            <Link to={{ pathname: `/home/user/${userID}/posts` }}>Posts</Link>
+            <br />
+            <Link to={{ pathname: `/home/user/${userID}/todos` }}>Todos</Link>
+            <br />
+            <button onClick={logOut}>Log Out</button>
         </>
     )
-  }
-  
-  export default Home
+}
+
+export default Home

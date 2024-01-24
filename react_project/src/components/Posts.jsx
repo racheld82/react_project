@@ -61,15 +61,14 @@ function getPost(){
   return (
     <>
    <Link to={`/home/user/${userID}`}>Back...</Link>
-
+   <br />
+   <button onClick={()=>navigate(`/home/user/${userID}/posts/add`)}>Add New Post</button>
+<br />
      <select value={searchCriteria} onChange={handleSearchChange}>
         <option value="sequential">sequential</option>
         <option value="title">title</option>
         <option value="none">none</option>
       </select>
-
-
-    <div>
       <input
         type="text"
         placeholder="search term"
@@ -78,13 +77,11 @@ function getPost(){
       />
 
 
+
       {posts.map((post) => (filteredPosts(post)&&
         <Post key={post.id} post={post} deletePost={deletePost} updateArr={updateArr}/>
       ))}
-    </div>
-
-    <button onClick={()=>navigate(`/home/user/${userID}/posts/add`)}>Add New Post</button>
-    </>
+          </>
   );
 };
 

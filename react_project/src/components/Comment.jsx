@@ -2,27 +2,28 @@ import React, { useState } from 'react';
 import UpdateComment from './UpdateComment';
 import "../style.css";
 
-function Comment(props)  {
-  const[toUpdate,setToUpdate]=useState(false)
-  const comment=props.comment
-  const email=JSON.parse(localStorage.getItem("currentUser")).email
+function Comment(props) {
+  const [toUpdate, setToUpdate] = useState(false)
+  const comment = props.comment
+  const email = JSON.parse(localStorage.getItem("currentUser")).email
 
-  function deleteComment(){
+  function deleteComment() {
     console.log(comment.id);
     fetch(`http://localhost:3000/comments?id=${comment.id}`, {
-        method: 'DELETE',
-        headers: {
+      method: 'DELETE',
+      headers: {
         'Content-Type': 'application/json',
-        }}).then(response => {
-          response.json();
-          console.log("deleted")
-        }).catch(() => {
-        console.log("delete fail");
-        });
+      }
+    }).then(response => {
+      response.json();
+      console.log("deleted")
+    }).catch(() => {
+      console.log("delete fail");
+    });
 
 
-      props.deleteFromArr(comment.id);
-  
+    props.deleteFromArr(comment.id);
+
   }
 
   return (
@@ -30,10 +31,9 @@ function Comment(props)  {
       {comment.name}: {comment.body}
       {email === comment.email && (
         <>
-          <button onClick={() => {setToUpdate(true)}}>update</button>
+          <button onClick={() => { setToUpdate(true) }}>update</button>
           <button onClick={() => deleteComment(comment.id)}>delete</button>
-          {toUpdate&& <UpdateComment updateArr={props.updateArr} comment={comment}/>}
-
+          {toUpdate && <UpdateComment updateArr={props.updateArr} comment={comment} />}
         </>
       )}
     </li>

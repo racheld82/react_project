@@ -33,10 +33,12 @@ function Register() {
 
   return (
     <>
-      <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)}/>
-      <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
-      <input type='password' placeholder='Verify Password' onChange={(e) => setVerifyPassword(e.target.value)}/>
-      <button onClick={isValidUser}>Register</button>
+    <form onSubmit={isValidUser}>
+      <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)}required/>
+      <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}required/>
+      <input type='password' placeholder='Verify Password' onChange={(e) => setVerifyPassword(e.target.value)} required/>
+      <button type='submit'>Register</button>
+      </form>
     </>
   )
 }

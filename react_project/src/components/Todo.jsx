@@ -49,6 +49,7 @@ function Todo(props){
         <button onClick={deleteTodo}>Delete</button>
         <button onClick={()=>{setToUpdate(true)}}>Update</button>
         {toUpdate&&<UpdateTodo todo={todo} updateArr={props.updateArr}/>}
+        <p>------------------------------</p>
         </>
        
     )

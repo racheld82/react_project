@@ -7,13 +7,13 @@ import { UserContext } from '../UserProvider';
 import "../style.css";
 
 function Post(props) {
-  const post=props.post;
+  const post = props.post;
   const [isExpanded, setIsExpanded] = useState(false);
-  const[toUpdate,setToUpdate]=useState(false)
-  const navigate=useNavigate()
+  const [toUpdate, setToUpdate] = useState(false)
+  const navigate = useNavigate()
   const { userID } = useContext(UserContext);
 
-  const style={
+  const style = {
 
   }
   const handleExpand = () => {
@@ -21,17 +21,18 @@ function Post(props) {
   };
 
 
-  function deletePost(){
+  function deletePost() {
     fetch(`http://localhost:3000/posts/${post.id}`, {
       method: 'DELETE',
       headers: {
-      'Content-Type': 'application/json',
-      }}).then(response => {
-        response.json();
-      }).catch(() => {
+        'Content-Type': 'application/json',
+      }
+    }).then(response => {
+      response.json();
+    }).catch(() => {
       console.log("delete fail");
-      });
-      props.deletePost(post.id);
+    });
+    props.deletePost(post.id);
   }
 
 
@@ -40,15 +41,16 @@ function Post(props) {
       <p>{post.id} - {post.title}</p>
       <button onClick={handleExpand}>Expand</button>
       <button onClick={deletePost}>Delete</button>
-      <button onClick={()=>{setToUpdate(true)}}>Update</button>
-      <div>{toUpdate&&<UpdatePost post={post} updateArr={props.updateArr}/>}</div>
+      <button onClick={() => { setToUpdate(true) }}>Update</button>
+      <div>{toUpdate && <UpdatePost post={post} updateArr={props.updateArr} />}</div>
 
       {isExpanded && (
         <div>
           <p>{post.body}</p>
-          <button onClick={()=>navigate(`/home/user/${userID}/posts/${post.id}/comments`, {state:{postId:post.id}})}>Comments</button>
+          <button onClick={() => navigate(`/home/user/${userID}/posts/${post.id}/comments`, { state: { postId: post.id } })}>Comments</button>
         </div>
       )}
+      <p>-------------------</p>
     </div>
   );
 };

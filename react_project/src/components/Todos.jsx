@@ -3,13 +3,12 @@ import { useState,useEffect ,useContext} from "react"
 import Todo from "./Todo"
 import AddNewTodo from './AddNewTodo'
 import { UserContext } from '../UserProvider';
-import "../style.css";
 import { Link } from "react-router-dom";
 
 
 function Todos() {
-    const [todoArr, setTodos]=useState([])
-    const [originalTodoArr, setOriginalTodoArr] = useState([]);
+    const [todos, setTodos]=useState([])
+    const [originaltodos, setOriginaltodos] = useState([]);
     const [toAdd,setToAdd]=useState(false)
     const [sortCriteria, setSortCriteria] = useState('none'); // קריטריון מיון
     const [searchCriteria, setSearchCriteria] = useState('none'); // קריטריון חיפוש
@@ -17,16 +16,13 @@ function Todos() {
     const { userID } = useContext(UserContext);
     const userId = userID;
 
-    console.log(userID)
-    console.log("userId")
-    console.log(userId)
 
     useEffect(() => {
       getTodo();
   }, [])
 
   useEffect(() => {
-    setOriginalTodoArr([...todoArr]);
+    setOriginaltodos([...todos]);
     sortTodos();
   }, [sortCriteria]);
   
@@ -41,12 +37,12 @@ function Todos() {
 
 
     function deleteFromArr(todoId){
-      const updatedArr = todoArr.filter(item => item.id !== todoId);
+      const updatedArr = todos.filter(item => item.id !== todoId);
       setTodos(updatedArr);
     }
 
     function updateArr(todoId, title) {
-      setTodos(todoArr => todoArr.map((todo) => 
+      setTodos(todos => todos.map((todo) => 
         (todo.id === todoId ? { ...todo, title: title } : todo)
       ));
     }
@@ -69,12 +65,12 @@ function Todos() {
     function sortTodos () {
       switch (sortCriteria) {
         case 'sequential':
-        let tempTodos = [...originalTodoArr];
+        let tempTodos = [...originaltodos];
         tempTodos.sort((a, b) => (a.userID < b.userID) ? -1 : 1);
         setTodos(tempTodos);
         break;
         case 'execution':
-            setTodos(todoArr.slice().sort((a, b) => {
+            setTodos(todos.slice().sort((a, b) => {
                 if (a.completed && !b.completed) {
                   return -1; 
                 } else if (!a.completed && b.completed) {
@@ -88,12 +84,12 @@ function Todos() {
         break;
         case 'alphabetical':
           let tempTodos1 = [];
-          todoArr.map(t => tempTodos1.push(t));
+          todos.map(t => tempTodos1.push(t));
           tempTodos1.sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase()) ? -1 : 1);
           setTodos(tempTodos1)
             break;
         case 'random':
-            setTodos(todoArr.slice().sort(() => Math.random() - 0.5)); 
+            setTodos(todos.slice().sort(() => Math.random() - 0.5)); 
             break;
        
       }
@@ -124,6 +120,7 @@ function Todos() {
   
       return(
         <>
+        <h1>TODOS</h1>
         <Link to={`/home/user/${userID}`}>Back...</Link>
 
 
@@ -155,12 +152,9 @@ function Todos() {
 
 
     </div>
-    { todoArr.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
-
-  
-    
-      <button onClick={()=>{setToAdd(true)}}>Add An Item To The List</button>
+    <button onClick={()=>{setToAdd(true)}}>Add An Item To The List</button>
       {toAdd&&<AddNewTodo addToArr={addToArr}/>}
+    { todos.map((todo) => { return (searchedTodos(todo)&&<Todo key={todo.id} todo={todo} deleteFromArr={deleteFromArr} updateArr={updateArr} />)}) }
     </>
       )
  }
